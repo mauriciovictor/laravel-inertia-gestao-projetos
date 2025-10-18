@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\{UserController, HomeController};
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home', ['name' => 'Mauricio Ferreira']);
-});
+Route::get('/', HomeController::class);
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users/store', [UserController::class, 'store'])->name('users.store');;
+Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/update/{id}', [UserController::class, 'update'])->name('users.update');

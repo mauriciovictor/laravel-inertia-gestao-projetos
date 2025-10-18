@@ -1,11 +1,12 @@
 <script setup>
- const props = defineProps(['name'])
+import AppLayout from '../Layouts/AppLayout.vue'
+
+const props= defineProps(['name'])
 </script>
 
 <template>
- <h1> Hello  World, {{props.name}}</h1>
+    <Toast/>
+     <AppLayout>
+         <h3 class="text-3xl text-neutral-900 font-medium mb-8"> Olá, {{name}} </h3>
+     </AppLayout>
 </template>
-
-<style scoped>
-
-</style>

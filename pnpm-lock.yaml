@@ -11,16 +11,40 @@ importers:
       '@inertiajs/vue3':
         specifier: ^2.2.8
         version: 2.2.8(vue@3.5.22)
+      '@primeuix/themes':
+        specifier: ^1.2.5
+        version: 1.2.5
+      '@primevue/forms':
+        specifier: ^4.4.1
+        version: 4.4.1(vue@3.5.22)
       '@vitejs/plugin-vue':
         specifier: ^6.0.1
         version: 6.0.1(vite@7.1.10(jiti@2.6.1)(lightningcss@1.30.1))(vue@3.5.22)
+      primeicons:
+        specifier: ^7.0.0
+        version: 7.0.0
+      primevue:
+        specifier: ^4.4.1
+        version: 4.4.1(vue@3.5.22)
+      tailwindcss-primeui:
+        specifier: ^0.6.1
+        version: 0.6.1(tailwindcss@4.1.14)
       vue:
         specifier: ^3.5.22
         version: 3.5.22
+      ziggy-js:
+        specifier: ^2.6.0
+        version: 2.6.0
     devDependencies:
+      '@laravel/vite-plugin-wayfinder':
+        specifier: ^0.1.7
+        version: 0.1.7
       '@tailwindcss/vite':
-        specifier: ^4.0.0
+        specifier: ^4.1.14
         version: 4.1.14(vite@7.1.10(jiti@2.6.1)(lightningcss@1.30.1))
+      autoprefixer:
+        specifier: ^10.4.21
+        version: 10.4.21(postcss@8.5.6)
       axios:
         specifier: ^1.11.0
         version: 1.12.2
@@ -30,8 +54,11 @@ importers:
       laravel-vite-plugin:
         specifier: ^2.0.0
         version: 2.0.1(vite@7.1.10(jiti@2.6.1)(lightningcss@1.30.1))
+      postcss:
+        specifier: ^8.5.6
+        version: 8.5.6
       tailwindcss:
-        specifier: ^4.0.0
+        specifier: ^4.1.14
         version: 4.1.14
       vite:
         specifier: ^7.0.7
@@ -239,6 +266,41 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@laravel/vite-plugin-wayfinder@0.1.7':
+    resolution: {integrity: sha512-yZYIr1iwuCQ7LFI+GsJk9vacw1HWMp3ZlDlW0pdfz3zXyKeu4US7oH79KmQQ031L0cYaSyaUMo/Ha1D4BosKqw==}
+
+  '@primeuix/forms@0.1.0':
+    resolution: {integrity: sha512-LctcQidb+B5PuvAFWH24YH/SIzmHlOabLHpaTeGY/k51iBv1WyCp+5w9JMYuMB/BplSvV0ZGySxQVkN5Azr/aQ==}
+    engines: {node: '>=12.11.0'}
+
+  '@primeuix/styled@0.7.4':
+    resolution: {integrity: sha512-QSO/NpOQg8e9BONWRBx9y8VGMCMYz0J/uKfNJEya/RGEu7ARx0oYW0ugI1N3/KB1AAvyGxzKBzGImbwg0KUiOQ==}
+    engines: {node: '>=12.11.0'}
+
+  '@primeuix/styles@1.2.5':
+    resolution: {integrity: sha512-nypFRct/oaaBZqP4jinT0puW8ZIfs4u+l/vqUFmJEPU332fl5ePj6DoOpQgTLzo3OfmvSmz5a5/5b4OJJmmi7Q==}
+
+  '@primeuix/themes@1.2.5':
+    resolution: {integrity: sha512-n3YkwJrHQaEESc/D/A/iD815sxp8cKnmzscA6a8Tm8YvMtYU32eCahwLLe6h5rywghVwxASWuG36XBgISYOIjQ==}
+
+  '@primeuix/utils@0.6.1':
+    resolution: {integrity: sha512-tQL/ZOPgCdD+NTimlUmhyD0ey8J1XmpZE4hDHM+/fnuBicVVmlKOd5HpS748LcOVRUKbWjmEPdHX4hi5XZoC1Q==}
+    engines: {node: '>=12.11.0'}
+
+  '@primevue/core@4.4.1':
+    resolution: {integrity: sha512-RG56iDKIJT//EtntjQzOiWOHZZJczw/qWWtdL5vFvw8/QDS9DPKn8HLpXK7N5Le6KK1MLXUsxoiGTZK+poUFUg==}
+    engines: {node: '>=12.11.0'}
+    peerDependencies:
+      vue: ^3.5.0
+
+  '@primevue/forms@4.4.1':
+    resolution: {integrity: sha512-wdTVbHG6r+Msq5Cr/8r8cswWH4RdRj0eiiLYcK9S8d+nIcRnQlt/DO0o+hkgzpRVR3DvczEhodGOxUP7gkuq0g==}
+    engines: {node: '>=12.11.0'}
+
+  '@primevue/icons@4.4.1':
+    resolution: {integrity: sha512-UfDimrIjVdY6EziwieyV4zPKzW6mnKHKhy4Dgyjv2oI6pNeuim+onbJo1ce22PEGXW78vfblG/3/JIzVHFweqQ==}
+    engines: {node: '>=12.11.0'}
 
   '@rolldown/pluginutils@1.0.0-beta.29':
     resolution: {integrity: sha512-NIJgOsMjbxAXvoGq/X0gD7VPMQ8j9g0BiDaNjVNVjvl+iKXxL3Jre0v31RmBYeLEmkbj2s02v8vFTbUXi5XS2Q==}
@@ -499,8 +561,24 @@ packages:
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
 
+  autoprefixer@10.4.21:
+    resolution: {integrity: sha512-O+A6LWV5LDHSJD3LjHYoNi4VLsj/Whi7k6zG12xTYaU4cQ8oxQGckXNX8cRHK5yOZ/ppVHe0ZBXGzSV9jXdVbQ==}
+    engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
+    peerDependencies:
+      postcss: ^8.1.0
+
   axios@1.12.2:
     resolution: {integrity: sha512-vMJzPewAlRyOgxV2dU0Cuz2O8zzzx9VYtbJOaBgXFeLc4IV/Eg50n4LowmehOOR61S8ZMpc2K5Sa7g6A4jfkUw==}
+
+  baseline-browser-mapping@2.8.17:
+    resolution: {integrity: sha512-j5zJcx6golJYTG6c05LUZ3Z8Gi+M62zRT/ycz4Xq4iCOdpcxwg7ngEYD4KA0eWZC7U17qh/Smq8bYbACJ0ipBA==}
+    hasBin: true
+
+  browserslist@4.26.3:
+    resolution: {integrity: sha512-lAUU+02RFBuCKQPj/P6NgjlbCnLBMp4UtgTx7vNHd3XSIJF87s9a5rA3aH2yw3GS9DqZAUbOtZdCCiZeVRqt0w==}
+    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
+    hasBin: true
 
   call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
@@ -509,6 +587,9 @@ packages:
   call-bound@1.0.4:
     resolution: {integrity: sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==}
     engines: {node: '>= 0.4'}
+
+  caniuse-lite@1.0.30001751:
+    resolution: {integrity: sha512-A0QJhug0Ly64Ii3eIqHu5X51ebln3k4yTUkY1j8drqpWHVreg/VLijN48cZ1bYPiqOQuqpkIKnzr/Ul8V+p6Cw==}
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -552,6 +633,9 @@ packages:
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
+
+  electron-to-chromium@1.5.237:
+    resolution: {integrity: sha512-icUt1NvfhGLar5lSWH3tHNzablaA5js3HVHacQimfP8ViEBOQv+L7DKEuHdbTZ0SKCO1ogTJTIL1Gwk9S6Qvcg==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -613,6 +697,9 @@ packages:
   form-data@4.0.4:
     resolution: {integrity: sha512-KrGhL9Q4zjj0kiUt5OO4Mr/A/jlI2jDYs5eHBpYHPcBEVSiipAvn2Ko2HnPe20rmcuuvMHNdZFp+4IlGTMF0Ow==}
     engines: {node: '>= 6'}
+
+  fraction.js@4.3.7:
+    resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
 
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
@@ -767,6 +854,13 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  node-releases@2.0.25:
+    resolution: {integrity: sha512-4auku8B/vw5psvTiiN9j1dAOsXvMoGqJuKJcR+dTdqiXEK20mMTk1UEo3HS16LeGQsVG6+qKTPM9u/qQ2LqATA==}
+
+  normalize-range@0.1.2:
+    resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
+    engines: {node: '>=0.10.0'}
+
   object-inspect@1.13.4:
     resolution: {integrity: sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==}
     engines: {node: '>= 0.4'}
@@ -782,12 +876,26 @@ packages:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
     engines: {node: '>=12'}
 
+  postcss-value-parser@4.2.0:
+    resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
+
   postcss@8.5.6:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
+  primeicons@7.0.0:
+    resolution: {integrity: sha512-jK3Et9UzwzTsd6tzl2RmwrVY/b8raJ3QZLzoDACj+oTJ0oX7L9Hy+XnVwgo4QVKlKpnP/Ur13SXV/pVh4LzaDw==}
+
+  primevue@4.4.1:
+    resolution: {integrity: sha512-JbHBa5k30pZ7mn/z4vYBOnyt5GrR15eM3X0wa3VanonxnFLYkTEx8OMh33aU6ndWeOfi7Ef57dOL3bTH+3f4hQ==}
+    engines: {node: '>=12.11.0'}
+
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+
+  qs-esm@7.0.2:
+    resolution: {integrity: sha512-D8NAthKSD7SGn748v+GLaaO6k08Mvpoqroa35PqIQC4gtUa8/Pb/k+r0m0NnGBVbHDP1gKZ2nVywqfMisRhV5A==}
+    engines: {node: '>=18'}
 
   qs@6.14.0:
     resolution: {integrity: sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==}
@@ -845,6 +953,11 @@ packages:
     resolution: {integrity: sha512-MpUEN2OodtUzxvKQl72cUF7RQ5EiHsGvSsVG0ia9c5RbWGL2CI4C7EpPS8UTBIplnlzZiNuV56w+FuNxy3ty2Q==}
     engines: {node: '>=10'}
 
+  tailwindcss-primeui@0.6.1:
+    resolution: {integrity: sha512-T69Rylcrmnt8zy9ik+qZvsLuRIrS9/k6rYJSIgZ1trnbEzGDDQSCIdmfyZknevqiHwpSJHSmQ9XT2C+S/hJY4A==}
+    peerDependencies:
+      tailwindcss: '>=3.1.0'
+
   tailwindcss@4.1.14:
     resolution: {integrity: sha512-b7pCxjGO98LnxVkKjaZSDeNuljC4ueKUddjENJOADtubtdo8llTaJy7HwBMeLNSSo2N5QIAgklslK1+Ir8r6CA==}
 
@@ -866,6 +979,12 @@ packages:
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
+  update-browserslist-db@1.1.3:
+    resolution: {integrity: sha512-UxhIZQ+QInVdunkDAaiazvvT/+fXL5Osr0JZlJulepYu6Jd7qJtDZjlur0emRlT71EN3ScPoE7gvsuIKKNavKw==}
+    hasBin: true
+    peerDependencies:
+      browserslist: '>= 4.21.0'
 
   vite-plugin-full-reload@1.2.0:
     resolution: {integrity: sha512-kz18NW79x0IHbxRSHm0jttP4zoO9P9gXh+n6UTwlNKnviTTEpOlum6oS9SmecrTtSr+muHEn5TUuC75UovQzcA==}
@@ -937,6 +1056,9 @@ packages:
   yargs@17.7.2:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
+
+  ziggy-js@2.6.0:
+    resolution: {integrity: sha512-V6xeZKEG67xt5Qtli5nCpQrc5TXW/tf3dKu2QLJS2TCxe+xxo/5AusT7M3MwX4nNeSEKBJMIvVJz2dlt+ziWYQ==}
 
 snapshots:
 
@@ -1071,6 +1193,47 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@laravel/vite-plugin-wayfinder@0.1.7': {}
+
+  '@primeuix/forms@0.1.0':
+    dependencies:
+      '@primeuix/utils': 0.6.1
+
+  '@primeuix/styled@0.7.4':
+    dependencies:
+      '@primeuix/utils': 0.6.1
+
+  '@primeuix/styles@1.2.5':
+    dependencies:
+      '@primeuix/styled': 0.7.4
+
+  '@primeuix/themes@1.2.5':
+    dependencies:
+      '@primeuix/styled': 0.7.4
+
+  '@primeuix/utils@0.6.1': {}
+
+  '@primevue/core@4.4.1(vue@3.5.22)':
+    dependencies:
+      '@primeuix/styled': 0.7.4
+      '@primeuix/utils': 0.6.1
+      vue: 3.5.22
+
+  '@primevue/forms@4.4.1(vue@3.5.22)':
+    dependencies:
+      '@primeuix/forms': 0.1.0
+      '@primeuix/utils': 0.6.1
+      '@primevue/core': 4.4.1(vue@3.5.22)
+    transitivePeerDependencies:
+      - vue
+
+  '@primevue/icons@4.4.1(vue@3.5.22)':
+    dependencies:
+      '@primeuix/utils': 0.6.1
+      '@primevue/core': 4.4.1(vue@3.5.22)
+    transitivePeerDependencies:
+      - vue
 
   '@rolldown/pluginutils@1.0.0-beta.29': {}
 
@@ -1287,6 +1450,16 @@ snapshots:
 
   asynckit@0.4.0: {}
 
+  autoprefixer@10.4.21(postcss@8.5.6):
+    dependencies:
+      browserslist: 4.26.3
+      caniuse-lite: 1.0.30001751
+      fraction.js: 4.3.7
+      normalize-range: 0.1.2
+      picocolors: 1.1.1
+      postcss: 8.5.6
+      postcss-value-parser: 4.2.0
+
   axios@1.12.2:
     dependencies:
       follow-redirects: 1.15.11
@@ -1294,6 +1467,16 @@ snapshots:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
+
+  baseline-browser-mapping@2.8.17: {}
+
+  browserslist@4.26.3:
+    dependencies:
+      baseline-browser-mapping: 2.8.17
+      caniuse-lite: 1.0.30001751
+      electron-to-chromium: 1.5.237
+      node-releases: 2.0.25
+      update-browserslist-db: 1.1.3(browserslist@4.26.3)
 
   call-bind-apply-helpers@1.0.2:
     dependencies:
@@ -1304,6 +1487,8 @@ snapshots:
     dependencies:
       call-bind-apply-helpers: 1.0.2
       get-intrinsic: 1.3.0
+
+  caniuse-lite@1.0.30001751: {}
 
   chalk@4.1.2:
     dependencies:
@@ -1348,6 +1533,8 @@ snapshots:
       call-bind-apply-helpers: 1.0.2
       es-errors: 1.3.0
       gopd: 1.2.0
+
+  electron-to-chromium@1.5.237: {}
 
   emoji-regex@8.0.0: {}
 
@@ -1419,6 +1606,8 @@ snapshots:
       es-set-tostringtag: 2.1.0
       hasown: 2.0.2
       mime-types: 2.1.35
+
+  fraction.js@4.3.7: {}
 
   fsevents@2.3.3:
     optional: true
@@ -1538,6 +1727,10 @@ snapshots:
 
   nanoid@3.3.11: {}
 
+  node-releases@2.0.25: {}
+
+  normalize-range@0.1.2: {}
+
   object-inspect@1.13.4: {}
 
   picocolors@1.1.1: {}
@@ -1546,13 +1739,29 @@ snapshots:
 
   picomatch@4.0.3: {}
 
+  postcss-value-parser@4.2.0: {}
+
   postcss@8.5.6:
     dependencies:
       nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
+  primeicons@7.0.0: {}
+
+  primevue@4.4.1(vue@3.5.22):
+    dependencies:
+      '@primeuix/styled': 0.7.4
+      '@primeuix/styles': 1.2.5
+      '@primeuix/utils': 0.6.1
+      '@primevue/core': 4.4.1(vue@3.5.22)
+      '@primevue/icons': 4.4.1(vue@3.5.22)
+    transitivePeerDependencies:
+      - vue
+
   proxy-from-env@1.1.0: {}
+
+  qs-esm@7.0.2: {}
 
   qs@6.14.0:
     dependencies:
@@ -1642,6 +1851,10 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
 
+  tailwindcss-primeui@0.6.1(tailwindcss@4.1.14):
+    dependencies:
+      tailwindcss: 4.1.14
+
   tailwindcss@4.1.14: {}
 
   tapable@2.3.0: {}
@@ -1662,6 +1875,12 @@ snapshots:
   tree-kill@1.2.2: {}
 
   tslib@2.8.1: {}
+
+  update-browserslist-db@1.1.3(browserslist@4.26.3):
+    dependencies:
+      browserslist: 4.26.3
+      escalade: 3.2.0
+      picocolors: 1.1.1
 
   vite-plugin-full-reload@1.2.0:
     dependencies:
@@ -1710,3 +1929,7 @@ snapshots:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
+
+  ziggy-js@2.6.0:
+    dependencies:
+      qs-esm: 7.0.2
