@@ -12,7 +12,7 @@ export const useToastValidationsErrors = () => {
                 if (errs && Object.keys(errs).length) {
                     const messages = Object.values(errs).join('\n')
                     toast.add({
-                        severity: 'error',
+                        severity: 'warn',
                         summary: 'Erro de validação',
                         detail: messages,
                         life: 5000

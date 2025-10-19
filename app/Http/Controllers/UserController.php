@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Requests\CreateUseRequest;
+use App\Http\Requests\UpdateUseRequest;
+use App\Repositories\Eloquent\Models\User;
+use App\UseCases\Users\CreateUserUseCase;
+use App\UseCases\Users\UpdateUserUseCase;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use \Inertia\Response as InertiaResponse;
+use Inertia\Response as InertiaResponse;
 
 class UserController
 {
+    public function __construct(
+        private CreateUserUseCase $createUserUseCase,
+        private UpdateUserUseCase $updateUserUseCase)
+    {
+    }
+
     public function index(Request $request): InertiaResponse
     {
         $users = User::all();
@@ -26,57 +36,25 @@ class UserController
         return Inertia::render('Users/Form', compact('user'));
     }
 
-    public function update(Request $request, int $id)
+    public function update(UpdateUseRequest $request, int $id)
     {
-        #validação
-        $rules = [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-        ];
+        #cria o DTO a partir dos dados validados
+        $userData = $request->toDTO();
 
-        #verifica se a senha foi alterada
-        if (!empty($request->input('password'))) {
-            $rules['password'] = 'required|string|min:8|confirmed';
-            $rules['password_confirmation'] = 'required|string|min:8';
-        }
-
-        #validação
-        $request->validate($rules);
-
-        #busca o usuário
-        $user = User::find($id);
-
-        #pega os dadoos da request
-        $data = $request->except(['password', 'password_confirmation']);
-
-        #verifica se a senha foi alterada e atualiza a senha criptografada
-        if (!empty($request->input('password'))) {
-            $data['password'] = bcrypt($request->input('password'));
-        }
-
-        #atualiza
-        $user->update($data);
+        #atualiza o usuário
+        $this->updateUserUseCase->execute($id, $userData);
 
         return redirect()->route('users.index')->with('success', 'Usuário alterado com sucesso');
     }
 
 
-    public function store(Request $request)
+    public function store(CreateUseRequest $request)
     {
-        #validação
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'password_confirmation' => 'required|string|min:8',
-        ]);
+        #cria o DTO a partir dos dados validados
+        $userData = $request->toDTO();
 
-        #salvar
-        User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-        ]);
+        #salva o usuário
+        $this->createUserUseCase->execute($userData);
 
         return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso');
     }

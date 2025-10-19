@@ -8,6 +8,10 @@ export const useToastFlashMessages = () => {
 
     const showFlash = () => {
         const flash = page.props.flash;
+
+        //não existe o erro global caso , seja erro de validação de formulario
+        if(Object.keys(page.props.errors).length > 0 ) return;
+
         if (flash?.success) {
             toast.add({
                 severity: "success",
