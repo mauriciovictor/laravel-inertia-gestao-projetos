@@ -12,7 +12,6 @@ class UserRepository
 {
     public function __construct(private User $model)
     {
-
     }
 
     public function create(UserData $userData)
@@ -84,8 +83,12 @@ class UserRepository
 
     public function applySearch(Builder &$query, string $search): self
     {
-        $query->where('name', 'like', "%{$search}%");
-        $query->orWhere('email', 'like', "%{$search}%");
+        $query->where(function ($query) use ($search) {
+            if (!empty($search)) {
+                $query->where('name', 'like', "%{$search}%");
+                $query->orWhere('email', 'like', "%{$search}%");
+            }
+        });
 
         return $this;
     }
