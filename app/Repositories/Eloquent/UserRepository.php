@@ -43,12 +43,13 @@ class UserRepository
     }
 
 
-    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, int $page = 1, int $per_page = 5, array $appends): AbstractPaginator
+    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, string $search = '', int $page = 1, int $per_page = 5, array $appends): AbstractPaginator
     {
         $userQuery = User::query();
-        
+
         $this
             ->applyFilters($userQuery, $fieldsFilters, $filterValues)
+            ->applySearch($userQuery, $search)
             ->applyOrder($userQuery, $fielSortValues);
 
         return $userQuery
@@ -56,7 +57,7 @@ class UserRepository
             ->appends($appends);
     }
 
-    public function applyFilters(Builder &$query, array $fieldsFilters, array $filterValues)
+    public function applyFilters(Builder &$query, array $fieldsFilters, array $filterValues): self
     {
         foreach ($filterValues as $key => $filter) {
             if (in_array($key, $fieldsFilters)) {
@@ -70,13 +71,21 @@ class UserRepository
         return $this;
     }
 
-    public function applyOrder(Builder &$query, array $fieldSortValues)
+    public function applyOrder(Builder &$query, array $fieldSortValues): self
     {
         if ($fieldSortValues['field'] && $fieldSortValues['order']) {
             $query->orderBy($fieldSortValues['field'], $fieldSortValues['order']);
         } else {
             $query->orderBy('name', 'desc');
         }
+
+        return $this;
+    }
+
+    public function applySearch(Builder &$query, string $search): self
+    {
+        $query->where('name', 'like', "%{$search}%");
+        $query->orWhere('email', 'like', "%{$search}%");
 
         return $this;
     }

@@ -28,11 +28,12 @@ class UserController
     {
         $users = $this->getUsersUseCase->execute(
             fieldsFilters: ['name', 'email'],
+            filterValues: $request->all(),
             fieldSortValues: [
                 'order' => $request->input('order'),
                 'field' => $request->input('column'),
             ],
-            filterValues: $request->all(),
+            search: $request->input('search') ?? '',
             page: $request->input('page', 1),
             per_page: $request->input('per_page', 5),
             appends: $request->all()

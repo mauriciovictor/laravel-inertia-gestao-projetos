@@ -2,8 +2,8 @@
 import {ref} from "vue";
 import {index as UsersIndex} from "../actions/App/Http/Controllers/UserController.js";
 import HomeRender from "../actions/App/Http/Controllers/HomeController.js";
-import {useToastValidationsErrors} from "../Components/useToastValidationsErrors.js";
-import {useToastFlashMessages} from "../Components/useToastFlashMessages.js";
+import {useToastValidationsErrors} from "../composables/useToastValidationsErrors.js";
+import {useToastFlashMessages} from "../composables/useToastFlashMessages.js";
 
 const toastValidationErrors =  useToastValidationsErrors()
 toastValidationErrors.load()

@@ -20,6 +20,9 @@ importers:
       '@vitejs/plugin-vue':
         specifier: ^6.0.1
         version: 6.0.1(vite@7.1.10(jiti@2.6.1)(lightningcss@1.30.1))(vue@3.5.22)
+      lodash.debounce:
+        specifier: ^4.0.8
+        version: 4.0.8
       primeicons:
         specifier: ^7.0.0
         version: 7.0.0
@@ -825,6 +828,9 @@ packages:
 
   lodash-es@4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+
+  lodash.debounce@4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
 
   magic-string@0.30.19:
     resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
@@ -1706,6 +1712,8 @@ snapshots:
       lightningcss-win32-x64-msvc: 1.30.1
 
   lodash-es@4.17.21: {}
+
+  lodash.debounce@4.0.8: {}
 
   magic-string@0.30.19:
     dependencies:
