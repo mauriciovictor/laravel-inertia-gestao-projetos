@@ -3,7 +3,10 @@
 namespace App\Repositories\Eloquent;
 
 use App\DTOs\UserData;
+use App\Enums\FilterTypeEnum;
 use App\Repositories\Eloquent\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\AbstractPaginator;
 
 class UserRepository
 {
@@ -37,5 +40,26 @@ class UserRepository
 
     public function delete()
     {
+    }
+
+    public function allPaged(array $fieldsFilters, array $filterValues, int $page = 1, int $per_page = 5, array $appends): AbstractPaginator
+    {
+        $userQuery = User::query();
+        $this->applyFilters($userQuery, $fieldsFilters, $filterValues);
+        return $userQuery
+            ->paginate(perPage: $per_page, page: $page)
+            ->appends($appends);
+    }
+
+    public function applyFilters(Builder &$query, array $fieldsFilters, array $filterValues): void
+    {
+        foreach ($filterValues as $key => $filter) {
+            if (in_array($key, $fieldsFilters)) {
+                $filterType = FilterTypeEnum::tryFrom($filter['match'] ?? '');
+                $operator = $filterType->getOperator();
+                $operatorValue = $filterType->getOperatorValue($filter['value']);
+                $query->where($key, $operator, $operatorValue);
+            }
+        }
     }
 }

@@ -15,7 +15,6 @@ class CreateUserUseCase
     {
         try {
             $this->userRepository->create($userData);
-            dsdsd;
         } catch (\Exception $e) {
             throw new \Exception('Erro ao criar o usuário');
         }

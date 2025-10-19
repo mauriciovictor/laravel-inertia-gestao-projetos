@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\FilterTypeEnum;
 use App\Http\Requests\CreateUseRequest;
 use App\Http\Requests\UpdateUseRequest;
 use App\Repositories\Eloquent\Models\User;
+use App\Repositories\Eloquent\UserRepository;
 use App\UseCases\Users\CreateUserUseCase;
 use App\UseCases\Users\UpdateUserUseCase;
 use Illuminate\Http\Request;
@@ -21,7 +23,21 @@ class UserController
 
     public function index(Request $request): InertiaResponse
     {
-        $users = User::all();
+        $user = new User();
+        $userRepository = new UserRepository($user);
+        
+        try {
+            $users = $userRepository->allPaged(
+                fieldsFilters: ['name', 'email'],
+                filterValues: $request->all(),
+                page: $request->input('page', 1),
+                per_page: $request->input('per_page', 5),
+                appends: $request->all()
+            );
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
         return Inertia::render('Users/List', compact('users'));
     }
 

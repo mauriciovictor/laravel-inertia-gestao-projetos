@@ -3,12 +3,61 @@ import {useToast} from "primevue";
 import AppLayout from '../../Layouts/AppLayout.vue'
 import {Form, router} from "@inertiajs/vue3";
 import {route} from "ziggy-js";
-
+import {ref, computed} from "vue";
 const props = defineProps({
-    users: Array,
+    users: Object,
 })
 
+
+const filters = ref({
+    global: { value: null, matchMode: 'contains' },
+    name:{ constraints: [{ value: null, matchMode: 'contains' }] },
+    email:{ constraints: [{ value: null, matchMode: 'equals' }]},
+});
+
 const toast = useToast()
+
+const rowsPerPage = computed(() => props.users?.per_page ?? 5);
+const totalRecords = computed(() => props.users?.total ?? (props.users.data?.length ?? 0));
+const firstIndex = computed(() => ((props.users.current_page ?? 1) - 1) * (props.users.per_page ?? 5));
+
+console.log(props.users, rowsPerPage.value, totalRecords.value, firstIndex.value)
+
+function onPage(event) {
+    const page = event.page + 1;
+    router.get(route('users.index'), { page }, { preserveState: true, replace: true });
+}
+
+function flattenFilters(filters) {
+    const params = {};
+    const keys = Object.keys(filters);
+    if (keys.length <=0 ) return params;
+    for (const key of keys) {
+        if(key != 'global') {
+            const firstFilter = filters[key].constraints[0];
+            if (firstFilter && firstFilter.value != null && firstFilter.value !== '') {
+                params[`${key}[value] `] = firstFilter.value;
+                params[`${key}[match]`] = firstFilter.matchMode;
+            }
+        }
+    }
+    return params;
+}
+
+function onFilter({filters}) {
+    const params = {
+        page: 1,
+        ...flattenFilters(filters),
+    };
+    router.get(route('users.index'), params, { preserveState: true, replace: true });
+}
+
+const matchOptions = [
+    { label: 'Contém', value: 'contains' },
+    { label: 'Começa com', value: 'startsWith' },
+    { label: 'Igual', value: 'equals' },
+];
+
 </script>
 
 <template>
@@ -19,17 +68,54 @@ const toast = useToast()
         </div>
 
         <div class="bg-white border border-gray-100 rounded-lg shadow-md w-full p-12">
-            <DataTable :value="users" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem"
-                       paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-                       currentPageReportTemplate="{first} to {last} of {totalRecords}">
+            <DataTable :rows="rowsPerPage"
+                       :totalRecords="totalRecords"
+                       :first="firstIndex"
+                       v-model:filters="filters"
+                       filterDisplay="menu"
+                       :value="users.data"
+                       :globalFilterFields="['name']"
+                       removableSort
+                       paginator
+                       lazy
+                       @page="onPage"
+                       @filter="onFilter"
+                       class="p-1"
+                       size="small"
+                       :rowsPerPageOptions="[5, 10, 20, 50]"
+                       tableStyle="min-width: 50rem"
+                       currentPageReportTemplate="{first} de {last} para {totalRecords}">
+                <template #header>
+                    <div class="flex items-center justify-end">
+                        <IconField>
+                            <InputIcon>
+                                <i class="pi pi-search" />
+                            </InputIcon>
+                            <InputText  placeholder="Pesquisa geral" />
+                        </IconField>
+                    </div>
+                </template>
                 <template #paginatorstart>
                     <Button type="button" icon="pi pi-refresh" text />
                 </template>
                 <template #paginatorend>
                     <Button type="button" icon="pi pi-download" text />
                 </template>
-                <Column field="name" header="Name" style="width: 25%"></Column>
-                <Column field="email" header="E-mail" style="width: 25%"></Column>
+                <Column sortable field="name"  header="Name" style="width: 25%">
+                    <template #body="{ data }">
+                        {{ data.name }}
+                    </template>
+                    <template #filter="{ filterModel }">
+                        <div class="flex gap-2 items-center">
+                            <InputText v-model="filterModel.value" type="text" placeholder="Pesquise por nome" />
+                        </div>
+                    </template>
+                </Column>
+                <Column sortable field="email" header="E-mail" style="width: 25%">
+                    <template #filter="{ filterModel }">
+                        <InputText v-model="filterModel.value" type="text" placeholder="Pesquise por e-mail" />
+                    </template>
+                </Column>
                 <Column header="Ações" style="width: 25%">
                     <template #body="{ data }">
                         <Link :href="route('users.edit', data.id)">
