@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUseRequest;
 use App\Repositories\Eloquent\Models\User;
 use App\Repositories\Eloquent\UserRepository;
 use App\UseCases\Users\CreateUserUseCase;
+use App\UseCases\Users\GetUsersUseCase;
 use App\UseCases\Users\UpdateUserUseCase;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,26 +18,25 @@ class UserController
 {
     public function __construct(
         private CreateUserUseCase $createUserUseCase,
-        private UpdateUserUseCase $updateUserUseCase)
+        private UpdateUserUseCase $updateUserUseCase,
+        private GetUsersUseCase   $getUsersUseCase
+    )
     {
     }
 
     public function index(Request $request): InertiaResponse
     {
-        $user = new User();
-        $userRepository = new UserRepository($user);
-        
-        try {
-            $users = $userRepository->allPaged(
-                fieldsFilters: ['name', 'email'],
-                filterValues: $request->all(),
-                page: $request->input('page', 1),
-                per_page: $request->input('per_page', 5),
-                appends: $request->all()
-            );
-        } catch (\Exception $e) {
-            dd($e);
-        }
+        $users = $this->getUsersUseCase->execute(
+            fieldsFilters: ['name', 'email'],
+            fieldSortValues: [
+                'order' => $request->input('order'),
+                'field' => $request->input('column'),
+            ],
+            filterValues: $request->all(),
+            page: $request->input('page', 1),
+            per_page: $request->input('per_page', 5),
+            appends: $request->all()
+        );
 
         return Inertia::render('Users/List', compact('users'));
     }

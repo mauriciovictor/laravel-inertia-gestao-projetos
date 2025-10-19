@@ -8,27 +8,43 @@ const props = defineProps({
     users: Object,
 })
 
-
 const filters = ref({
     global: { value: null, matchMode: 'contains' },
     name:{ constraints: [{ value: null, matchMode: 'contains' }] },
     email:{ constraints: [{ value: null, matchMode: 'equals' }]},
 });
 
-const toast = useToast()
-
+const sortField = ref(null);
+const sortOrder = ref(null);
 const rowsPerPage = computed(() => props.users?.per_page ?? 5);
 const totalRecords = computed(() => props.users?.total ?? (props.users.data?.length ?? 0));
 const firstIndex = computed(() => ((props.users.current_page ?? 1) - 1) * (props.users.per_page ?? 5));
+const matchOptions = [
+    { label: 'Contém', value: 'contains' },
+    { label: 'Começa com', value: 'startsWith' },
+    { label: 'Igual', value: 'equals' },
+];
 
-console.log(props.users, rowsPerPage.value, totalRecords.value, firstIndex.value)
 
-function onPage(event) {
-    const page = event.page + 1;
-    router.get(route('users.index'), { page }, { preserveState: true, replace: true });
+const buildParams = (overrides = {}) => {
+    return {
+        page: overrides.page ?? 1,
+        ...(sortField.value ? { column: sortField.value } : {}),
+        ...(sortOrder.value ? { order: sortOrder.value } : {}),
+        ...flattenFilters(filters.value),
+        ...overrides,
+    };
+}
+
+function applyRequest(params = {}) {
+    const final = buildParams(params);
+    // remove nulos
+    Object.keys(final).forEach(k => final[k] == null && delete final[k]);
+    router.get(route('users.index'), final, { preserveState: true, replace: true });
 }
 
 function flattenFilters(filters) {
+
     const params = {};
     const keys = Object.keys(filters);
     if (keys.length <=0 ) return params;
@@ -44,19 +60,22 @@ function flattenFilters(filters) {
     return params;
 }
 
-function onFilter({filters}) {
-    const params = {
-        page: 1,
-        ...flattenFilters(filters),
-    };
-    router.get(route('users.index'), params, { preserveState: true, replace: true });
+function onPage(event) {
+    const page = event.page + 1;
+    applyRequest({ page });
 }
 
-const matchOptions = [
-    { label: 'Contém', value: 'contains' },
-    { label: 'Começa com', value: 'startsWith' },
-    { label: 'Igual', value: 'equals' },
-];
+function onFilter(event) {
+    filters.value = event.filters;
+    applyRequest({ page: 1 });
+}
+
+function onSort(props) {
+    sortField.value = props.sortField ?? null;
+    sortOrder.value = props.sortOrder == 1 ? 'asc' : (props.sortOrder == -1 ? 'desc' : null);
+    applyRequest({ page: 1 });
+}
+
 
 </script>
 
@@ -80,6 +99,7 @@ const matchOptions = [
                        lazy
                        @page="onPage"
                        @filter="onFilter"
+                       @sort="onSort"
                        class="p-1"
                        size="small"
                        :rowsPerPageOptions="[5, 10, 20, 50]"

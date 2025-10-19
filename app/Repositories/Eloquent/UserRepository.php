@@ -42,16 +42,21 @@ class UserRepository
     {
     }
 
-    public function allPaged(array $fieldsFilters, array $filterValues, int $page = 1, int $per_page = 5, array $appends): AbstractPaginator
+
+    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, int $page = 1, int $per_page = 5, array $appends): AbstractPaginator
     {
         $userQuery = User::query();
-        $this->applyFilters($userQuery, $fieldsFilters, $filterValues);
+        
+        $this
+            ->applyFilters($userQuery, $fieldsFilters, $filterValues)
+            ->applyOrder($userQuery, $fielSortValues);
+
         return $userQuery
             ->paginate(perPage: $per_page, page: $page)
             ->appends($appends);
     }
 
-    public function applyFilters(Builder &$query, array $fieldsFilters, array $filterValues): void
+    public function applyFilters(Builder &$query, array $fieldsFilters, array $filterValues)
     {
         foreach ($filterValues as $key => $filter) {
             if (in_array($key, $fieldsFilters)) {
@@ -61,5 +66,18 @@ class UserRepository
                 $query->where($key, $operator, $operatorValue);
             }
         }
+
+        return $this;
+    }
+
+    public function applyOrder(Builder &$query, array $fieldSortValues)
+    {
+        if ($fieldSortValues['field'] && $fieldSortValues['order']) {
+            $query->orderBy($fieldSortValues['field'], $fieldSortValues['order']);
+        } else {
+            $query->orderBy('name', 'desc');
+        }
+
+        return $this;
     }
 }
