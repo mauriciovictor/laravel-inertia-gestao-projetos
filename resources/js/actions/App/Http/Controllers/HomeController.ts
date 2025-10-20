@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../
 /**
 * @see \App\Http\Controllers\HomeController::__invoke
 * @see app/Http/Controllers/HomeController.php:9
-* @route '/'
+* @route '/home'
 */
 const HomeController = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: HomeController.url(options),
@@ -11,13 +11,13 @@ const HomeController = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 HomeController.definition = {
     methods: ["get","head"],
-    url: '/',
+    url: '/home',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\HomeController::__invoke
 * @see app/Http/Controllers/HomeController.php:9
-* @route '/'
+* @route '/home'
 */
 HomeController.url = (options?: RouteQueryOptions) => {
     return HomeController.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ HomeController.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\HomeController::__invoke
 * @see app/Http/Controllers/HomeController.php:9
-* @route '/'
+* @route '/home'
 */
 HomeController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: HomeController.url(options),
@@ -36,7 +36,7 @@ HomeController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\HomeController::__invoke
 * @see app/Http/Controllers/HomeController.php:9
-* @route '/'
+* @route '/home'
 */
 HomeController.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: HomeController.url(options),

@@ -5,6 +5,8 @@ import HomeRender from "../actions/App/Http/Controllers/HomeController.js";
 import {useToastValidationsErrors} from "../composables/useToastValidationsErrors.js";
 import {useToastFlashMessages} from "../composables/useToastFlashMessages.js";
 import perfilController from "../actions/App/Http/Controllers/PerfilController.js";
+import {logout} from "../routes/index.js";
+import {router} from "@inertiajs/vue3";
 
 const toastValidationErrors =  useToastValidationsErrors()
 toastValidationErrors.load()
@@ -90,7 +92,7 @@ const items = ref([
                         <span class="font-bold">Amy Elsner</span>
                     </span>
                 </button>
-                <a href="#" class="flex items-center hover:text-red-500 transition-colors duration-200">
+                <a  href="#logout" @click="router.post(logout())" class="flex items-center hover:text-red-500 transition-colors duration-200">
                     <span class="pi pi-sign-out"/>
                     <span>Logout</span>
                 </a>
