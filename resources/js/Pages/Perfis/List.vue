@@ -5,11 +5,12 @@ import {ref} from "vue";
 import {route} from "ziggy-js";
 import {router} from "@inertiajs/vue3";
 const props = defineProps({
-    users: Object,
+    perfis: Object,
 })
-const pageRoute = ref(route('users.index'))
-const pageRouteEdit = ref(route('users.edit', ':id'))
-const routeDelete = ref(route('users.destroy', ':id'))
+const pageRoute = ref(route('roles.index'))
+const pageRouteEdit = ref(route('roles.edit', ':id'))
+const routeDelete = ref(route('roles.destroy', ':id'))
+
 const columns = [
     {
         header: 'Nome',
@@ -17,32 +18,24 @@ const columns = [
         sortable: true,
         filter: true,
         style: 'width: 25%'
-    },
-     {
-        header: 'E-mail',
-        field: 'email',
-        sortable: true,
-        filter: true,
-         style: 'width: 25%'
-    },
+    }
 ]
 
 const filters = ref({
     global: { value: null, matchMode: 'contains' },
     name:{ constraints: [{ value: null, matchMode: 'contains' }] },
-    email:{ constraints: [{ value: null, matchMode: 'equals' }]},
 });
 </script>
 
 <template>
     <AppLayout>
         <div class="flex items-center justify-between">
-            <h3 class="text-3xl text-neutral-900 font-medium mb-8">Usuários </h3>
-            <Button label="Novo Usuário" severity="success" icon="pi pi-plus" class="p-button-outlined" @click="router.get('/users/create')"/>
+            <h3 class="text-3xl text-neutral-900 font-medium mb-8">Perfis de Usuários </h3>
+            <Button label="Novo Perfil" severity="success" icon="pi pi-plus" class="p-button-outlined" @click="router.get(route('roles.create'))"/>
         </div>
         <div class="bg-white border border-gray-100 rounded-lg shadow-md w-full p-12">
             <DefaultDataTable
-                :data="props.users"
+                :data="props.perfis"
                 :route="pageRoute"
                 :route-edit="pageRouteEdit"
                 :route-delete="routeDelete"

@@ -26,7 +26,7 @@ class UpdateUseRequest extends FormRequest
         #validação
         $rules = [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $this->id,
+            'email' => 'required|string|email|max:255|unique:users,email,' . $this->user,
         ];
 
         #verifica se a senha foi alterada

@@ -89,8 +89,8 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\UserController::store
-* @see app/Http/Controllers/UserController.php:68
-* @route '/users/store'
+* @see app/Http/Controllers/UserController.php:67
+* @route '/users'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -99,13 +99,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: '/users/store',
+    url: '/users',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\UserController::store
-* @see app/Http/Controllers/UserController.php:68
-* @route '/users/store'
+* @see app/Http/Controllers/UserController.php:67
+* @route '/users'
 */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -113,8 +113,8 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\UserController::store
-* @see app/Http/Controllers/UserController.php:68
-* @route '/users/store'
+* @see app/Http/Controllers/UserController.php:67
+* @route '/users'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -124,51 +124,51 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \App\Http\Controllers\UserController::edit
 * @see app/Http/Controllers/UserController.php:50
-* @route '/users/edit/{id}'
+* @route '/users/{user}/edit'
 */
-export const edit = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
 
 edit.definition = {
     methods: ["get","head"],
-    url: '/users/edit/{id}',
+    url: '/users/{user}/edit',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\UserController::edit
 * @see app/Http/Controllers/UserController.php:50
-* @route '/users/edit/{id}'
+* @route '/users/{user}/edit'
 */
-edit.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
+edit.url = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
-        args = { id: args }
+        args = { user: args }
     }
 
     if (Array.isArray(args)) {
         args = {
-            id: args[0],
+            user: args[0],
         }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-        id: args.id,
+        user: args.user,
     }
 
     return edit.definition.url
-            .replace('{id}', parsedArgs.id.toString())
+            .replace('{user}', parsedArgs.user.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\UserController::edit
 * @see app/Http/Controllers/UserController.php:50
-* @route '/users/edit/{id}'
+* @route '/users/{user}/edit'
 */
-edit.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -176,9 +176,9 @@ edit.get = (args: { id: string | number } | [id: string | number ] | string | nu
 /**
 * @see \App\Http\Controllers\UserController::edit
 * @see app/Http/Controllers/UserController.php:50
-* @route '/users/edit/{id}'
+* @route '/users/{user}/edit'
 */
-edit.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
@@ -186,55 +186,117 @@ edit.head = (args: { id: string | number } | [id: string | number ] | string | n
 /**
 * @see \App\Http\Controllers\UserController::update
 * @see app/Http/Controllers/UserController.php:56
-* @route '/users/update/{id}'
+* @route '/users/{user}'
 */
-export const update = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const update = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
-    method: 'post',
+    method: 'put',
 })
 
 update.definition = {
-    methods: ["post"],
-    url: '/users/update/{id}',
-} satisfies RouteDefinition<["post"]>
+    methods: ["put","patch"],
+    url: '/users/{user}',
+} satisfies RouteDefinition<["put","patch"]>
 
 /**
 * @see \App\Http\Controllers\UserController::update
 * @see app/Http/Controllers/UserController.php:56
-* @route '/users/update/{id}'
+* @route '/users/{user}'
 */
-update.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
+update.url = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
-        args = { id: args }
+        args = { user: args }
     }
 
     if (Array.isArray(args)) {
         args = {
-            id: args[0],
+            user: args[0],
         }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-        id: args.id,
+        user: args.user,
     }
 
     return update.definition.url
-            .replace('{id}', parsedArgs.id.toString())
+            .replace('{user}', parsedArgs.user.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\UserController::update
 * @see app/Http/Controllers/UserController.php:56
-* @route '/users/update/{id}'
+* @route '/users/{user}'
 */
-update.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+update.put = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
-    method: 'post',
+    method: 'put',
 })
 
-const UserController = { index, create, store, edit, update }
+/**
+* @see \App\Http\Controllers\UserController::update
+* @see app/Http/Controllers/UserController.php:56
+* @route '/users/{user}'
+*/
+update.patch = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: update.url(args, options),
+    method: 'patch',
+})
+
+/**
+* @see \App\Http\Controllers\UserController::destroy
+* @see app/Http/Controllers/UserController.php:78
+* @route '/users/{user}'
+*/
+export const destroy = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroy.url(args, options),
+    method: 'delete',
+})
+
+destroy.definition = {
+    methods: ["delete"],
+    url: '/users/{user}',
+} satisfies RouteDefinition<["delete"]>
+
+/**
+* @see \App\Http\Controllers\UserController::destroy
+* @see app/Http/Controllers/UserController.php:78
+* @route '/users/{user}'
+*/
+destroy.url = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { user: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            user: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        user: args.user,
+    }
+
+    return destroy.definition.url
+            .replace('{user}', parsedArgs.user.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\UserController::destroy
+* @see app/Http/Controllers/UserController.php:78
+* @route '/users/{user}'
+*/
+destroy.delete = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroy.url(args, options),
+    method: 'delete',
+})
+
+const UserController = { index, create, store, edit, update, destroy }
 
 export default UserController

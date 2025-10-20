@@ -2,12 +2,14 @@
 import {router} from "@inertiajs/vue3";
 import {ref, computed, watch} from "vue";
 import debounce from 'lodash.debounce';
+import {useDialogConfirm} from "../../composables/useDialogConfirm.js";
 
 const props = defineProps({
     data: Object,
     columns: Array,
     route: String,
     routeEdit: String,
+    routeDelete: String,
     filters: Object
 })
 
@@ -88,6 +90,27 @@ watch(
         handleFilterChange(newValue);
     }
 );
+
+const dialogConfirm = useDialogConfirm(
+    'Confirmação',
+    'Deseja deletar o registro?',
+    'pi pi-info-circle',
+    'Delete',
+    'Cancel',
+    'pi pi-check',
+    'pi pi-times',
+    () => {
+        router.delete(props.routeDelete.replace(':id', selectedRow.value), { preserveState: true, replace: true });
+    },
+    () => {}
+)
+
+const selectedRow = ref(null);
+
+const handleDeleteRecord = (id) => {
+    selectedRow.value = id;
+    dialogConfirm.showDialog();
+}
 </script>
 
 <template>
@@ -120,7 +143,7 @@ watch(
             </div>
         </template>
         <template #paginatorstart>
-            <Button type="button" icon="pi pi-refresh" text />
+            <Button type="button" icon="pi pi-refresh" text @click="router.get(props.route)" />
         </template>
         <template #paginatorend>
             <Button type="button" icon="pi pi-download" text />
@@ -141,6 +164,7 @@ watch(
                 <Link :href="props.routeEdit.replace(':id', data.id)">
                     <Button type="button" icon="pi pi-pencil" text />
                 </Link>
+                <Button @click="handleDeleteRecord(data.id)" type="button"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
             </template>
         </Column>
     </DataTable>

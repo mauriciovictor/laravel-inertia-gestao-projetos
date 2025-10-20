@@ -4,6 +4,7 @@ import {index as UsersIndex} from "../actions/App/Http/Controllers/UserControlle
 import HomeRender from "../actions/App/Http/Controllers/HomeController.js";
 import {useToastValidationsErrors} from "../composables/useToastValidationsErrors.js";
 import {useToastFlashMessages} from "../composables/useToastFlashMessages.js";
+import perfilController from "../actions/App/Http/Controllers/PerfilController.js";
 
 const toastValidationErrors =  useToastValidationsErrors()
 toastValidationErrors.load()
@@ -24,7 +25,7 @@ const items = ref([
                 label: 'Perfis',
                 icon: 'pi pi-key',
                 shortcut: 'CRTL+S',
-                action: () =>  UsersIndex()
+                action: () =>  perfilController.index()
             },
             {
                 label: 'projetos',
@@ -40,6 +41,7 @@ const items = ref([
 <template>
     <div class="flex">
         <Toast/>
+        <ConfirmDialog></ConfirmDialog>
         <Menu :model="items" class="flex flex-col w-full h-screen md:w-80">
             <template #start>
                 <Link :href="HomeRender()" class="flex items-center gap-1 bg-neutral-50 h-[86px] ">

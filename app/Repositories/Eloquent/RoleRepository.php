@@ -2,50 +2,45 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\DTOs\UserData;
 use App\Enums\FilterTypeEnum;
 use App\Repositories\Eloquent\Models\User;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\AbstractPaginator;
+use Spatie\Permission\Models\Role;
 
-class UserRepository
+class RoleRepository
 {
-    public function __construct(private User $model)
+    public function findById(int $id): \Spatie\Permission\Contracts\Role|Role
     {
+        return Role::with('permissions')->where('id', $id)->first();
     }
 
-    public function create(UserData $userData)
+    public function create(string $name): \Spatie\Permission\Contracts\Role|Role
     {
-        return $this->model->create([
-            'name' => $userData->name,
-            'email' => $userData->email,
-            'password' => $userData->password?->toHash(),
-        ]);
+        return Role::create(['name' => $name]);
     }
 
-    public function update($id, UserData $userData)
+    public function assyncPermissions(int $id, array $permissions): \Spatie\Permission\Contracts\Role|Role
     {
-        $data = [
-            'name' => $userData->name,
-            'email' => $userData->email,
-        ];
-
-        if ($userData->password) {
-            $data['password'] = $userData->password->toHash();
-        }
-
-        return $this->model->find($id)->update($data);
+        return Role::findById($id)->syncPermissions($permissions);
     }
 
-    public function delete(int $user_id): ?bool
+    public function update(int $id, $name): \Spatie\Permission\Contracts\Role|Role
     {
-        return $this->model->find($user_id)->delete();
+        Role::findById($id)->update(['name' => $name]);
+        return Role::findById($id);
+    }
+
+    public function delete(int $id): ?bool
+    {
+        return Role::findById($id)->delete();
     }
 
 
-    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, string $search = '', int $page = 1, int $per_page = 5, array $appends): AbstractPaginator
+    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, string $search = '', int $page = 1, int $per_page = 5, array $appends): LengthAwarePaginator
     {
-        $userQuery = User::query();
+        $userQuery = Role::query();
 
         $this
             ->applyFilters($userQuery, $fieldsFilters, $filterValues)
@@ -87,7 +82,6 @@ class UserRepository
         $query->where(function ($query) use ($search) {
             if (!empty($search)) {
                 $query->where('name', 'like', "%{$search}%");
-                $query->orWhere('email', 'like', "%{$search}%");
             }
         });
 

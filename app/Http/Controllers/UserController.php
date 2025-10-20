@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\FilterTypeEnum;
 use App\Http\Requests\CreateUseRequest;
 use App\Http\Requests\UpdateUseRequest;
 use App\Repositories\Eloquent\Models\User;
-use App\Repositories\Eloquent\UserRepository;
 use App\UseCases\Users\CreateUserUseCase;
+use App\UseCases\Users\DeleteUserUseCase;
 use App\UseCases\Users\GetUsersUseCase;
 use App\UseCases\Users\UpdateUserUseCase;
 use Illuminate\Http\Request;
@@ -19,7 +18,8 @@ class UserController
     public function __construct(
         private CreateUserUseCase $createUserUseCase,
         private UpdateUserUseCase $updateUserUseCase,
-        private GetUsersUseCase   $getUsersUseCase
+        private GetUsersUseCase   $getUsersUseCase,
+        private DeleteUserUseCase $deleteUserUseCase
     )
     {
     }
@@ -64,7 +64,6 @@ class UserController
         return redirect()->route('users.index')->with('success', 'Usuário alterado com sucesso');
     }
 
-
     public function store(CreateUseRequest $request)
     {
         #cria o DTO a partir dos dados validados
@@ -74,5 +73,11 @@ class UserController
         $this->createUserUseCase->execute($userData);
 
         return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso');
+    }
+
+    public function destroy(int $id)
+    {
+        $this->deleteUserUseCase->execute($id);
+        return redirect()->route('users.index')->with('success', 'Usuário deletado com sucesso');
     }
 }
