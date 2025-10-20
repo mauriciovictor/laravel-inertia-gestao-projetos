@@ -9,6 +9,7 @@ class UserData
     public function __construct(
         public string        $name,
         public string        $email,
+        public int           $role_id,
         public Password|null $password = null,
     )
     {

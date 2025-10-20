@@ -8,10 +8,9 @@ const props = defineProps(['perfil', 'features'])
 //carrega os dados pra atualização
 const form = useForm({
   name: props.perfil?.name ?? '',
-  permissions: props.perfil?.permissions ?? [], // array de keys: ['usuarios.view', 'usuarios.edit', ...]
+  permissions: props.perfil?.permissions ?? [],
 })
 
-// Helper para action: ajuste os nomes das rotas conforme seu projeto (ex.: 'roles.store' / 'roles.update')
 const submitAction = props.perfil?.id ? route('roles.update', props.perfil.id) : route('roles.store')
 </script>
  <template>

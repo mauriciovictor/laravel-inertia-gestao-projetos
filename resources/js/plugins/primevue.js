@@ -14,7 +14,7 @@ import {
     Menu,
     Avatar,
     Dropdown,
-    ConfirmDialog
+    ConfirmDialog, AutoComplete, Select
 } from "primevue";
 
 import {ThemeDefault} from "../Themes/primevue/default";
@@ -55,6 +55,8 @@ export default function registerPrimeVue(app) {
     app.component('ColumnGroup', ColumnGroup)
     app.component('Row', Row)
     app.component('ConfirmDialog', ConfirmDialog)
+    app.component('AutoComplete', AutoComplete)
+    app.component('Select', Select)
 
     app.use(ToastService);
     app.use(ConfirmationService);

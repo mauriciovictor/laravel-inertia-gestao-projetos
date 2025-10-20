@@ -1,7 +1,51 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
+* @see \App\Http\Controllers\PerfilController::openToComboBox
+* @see app/Http/Controllers/PerfilController.php:84
+* @route '/roles/open-combo-box'
+*/
+export const openToComboBox = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: openToComboBox.url(options),
+    method: 'get',
+})
+
+openToComboBox.definition = {
+    methods: ["get","head"],
+    url: '/roles/open-combo-box',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\PerfilController::openToComboBox
+* @see app/Http/Controllers/PerfilController.php:84
+* @route '/roles/open-combo-box'
+*/
+openToComboBox.url = (options?: RouteQueryOptions) => {
+    return openToComboBox.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\PerfilController::openToComboBox
+* @see app/Http/Controllers/PerfilController.php:84
+* @route '/roles/open-combo-box'
+*/
+openToComboBox.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: openToComboBox.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\PerfilController::openToComboBox
+* @see app/Http/Controllers/PerfilController.php:84
+* @route '/roles/open-combo-box'
+*/
+openToComboBox.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: openToComboBox.url(options),
+    method: 'head',
+})
+
+/**
 * @see \App\Http\Controllers\PerfilController::index
-* @see app/Http/Controllers/PerfilController.php:29
+* @see app/Http/Controllers/PerfilController.php:31
 * @route '/roles'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +60,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\PerfilController::index
-* @see app/Http/Controllers/PerfilController.php:29
+* @see app/Http/Controllers/PerfilController.php:31
 * @route '/roles'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +69,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PerfilController::index
-* @see app/Http/Controllers/PerfilController.php:29
+* @see app/Http/Controllers/PerfilController.php:31
 * @route '/roles'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +79,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PerfilController::index
-* @see app/Http/Controllers/PerfilController.php:29
+* @see app/Http/Controllers/PerfilController.php:31
 * @route '/roles'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +89,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\PerfilController::create
-* @see app/Http/Controllers/PerfilController.php:63
+* @see app/Http/Controllers/PerfilController.php:65
 * @route '/roles/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -60,7 +104,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\PerfilController::create
-* @see app/Http/Controllers/PerfilController.php:63
+* @see app/Http/Controllers/PerfilController.php:65
 * @route '/roles/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -69,7 +113,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PerfilController::create
-* @see app/Http/Controllers/PerfilController.php:63
+* @see app/Http/Controllers/PerfilController.php:65
 * @route '/roles/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -79,7 +123,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PerfilController::create
-* @see app/Http/Controllers/PerfilController.php:63
+* @see app/Http/Controllers/PerfilController.php:65
 * @route '/roles/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -89,7 +133,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\PerfilController::store
-* @see app/Http/Controllers/PerfilController.php:69
+* @see app/Http/Controllers/PerfilController.php:71
 * @route '/roles'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -104,7 +148,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\PerfilController::store
-* @see app/Http/Controllers/PerfilController.php:69
+* @see app/Http/Controllers/PerfilController.php:71
 * @route '/roles'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -113,7 +157,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PerfilController::store
-* @see app/Http/Controllers/PerfilController.php:69
+* @see app/Http/Controllers/PerfilController.php:71
 * @route '/roles'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -123,7 +167,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\PerfilController::edit
-* @see app/Http/Controllers/PerfilController.php:45
+* @see app/Http/Controllers/PerfilController.php:47
 * @route '/roles/{role}/edit'
 */
 export const edit = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -138,7 +182,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\PerfilController::edit
-* @see app/Http/Controllers/PerfilController.php:45
+* @see app/Http/Controllers/PerfilController.php:47
 * @route '/roles/{role}/edit'
 */
 edit.url = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -165,7 +209,7 @@ edit.url = (args: { role: string | number } | [role: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\PerfilController::edit
-* @see app/Http/Controllers/PerfilController.php:45
+* @see app/Http/Controllers/PerfilController.php:47
 * @route '/roles/{role}/edit'
 */
 edit.get = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -175,7 +219,7 @@ edit.get = (args: { role: string | number } | [role: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\PerfilController::edit
-* @see app/Http/Controllers/PerfilController.php:45
+* @see app/Http/Controllers/PerfilController.php:47
 * @route '/roles/{role}/edit'
 */
 edit.head = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -185,7 +229,7 @@ edit.head = (args: { role: string | number } | [role: string | number ] | string
 
 /**
 * @see \App\Http\Controllers\PerfilController::update
-* @see app/Http/Controllers/PerfilController.php:52
+* @see app/Http/Controllers/PerfilController.php:54
 * @route '/roles/{role}'
 */
 export const update = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -200,7 +244,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\PerfilController::update
-* @see app/Http/Controllers/PerfilController.php:52
+* @see app/Http/Controllers/PerfilController.php:54
 * @route '/roles/{role}'
 */
 update.url = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -227,7 +271,7 @@ update.url = (args: { role: string | number } | [role: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\PerfilController::update
-* @see app/Http/Controllers/PerfilController.php:52
+* @see app/Http/Controllers/PerfilController.php:54
 * @route '/roles/{role}'
 */
 update.put = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -237,7 +281,7 @@ update.put = (args: { role: string | number } | [role: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\PerfilController::update
-* @see app/Http/Controllers/PerfilController.php:52
+* @see app/Http/Controllers/PerfilController.php:54
 * @route '/roles/{role}'
 */
 update.patch = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -247,7 +291,7 @@ update.patch = (args: { role: string | number } | [role: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\PerfilController::destroy
-* @see app/Http/Controllers/PerfilController.php:76
+* @see app/Http/Controllers/PerfilController.php:78
 * @route '/roles/{role}'
 */
 export const destroy = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -262,7 +306,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\PerfilController::destroy
-* @see app/Http/Controllers/PerfilController.php:76
+* @see app/Http/Controllers/PerfilController.php:78
 * @route '/roles/{role}'
 */
 destroy.url = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -289,7 +333,7 @@ destroy.url = (args: { role: string | number } | [role: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\PerfilController::destroy
-* @see app/Http/Controllers/PerfilController.php:76
+* @see app/Http/Controllers/PerfilController.php:78
 * @route '/roles/{role}'
 */
 destroy.delete = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -297,6 +341,6 @@ destroy.delete = (args: { role: string | number } | [role: string | number ] | s
     method: 'delete',
 })
 
-const PerfilController = { index, create, store, edit, update, destroy }
+const PerfilController = { openToComboBox, index, create, store, edit, update, destroy }
 
 export default PerfilController

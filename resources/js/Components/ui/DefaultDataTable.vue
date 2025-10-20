@@ -42,7 +42,7 @@ function applyRequest(params = {}) {
     const final = buildParams(params);
     // remove nulos
     Object.keys(final).forEach(k => final[k] == null && delete final[k]);
-    router.get(props.route, final, { preserveState: true, replace: true });
+    router.get(props.route, final, { preserveState: true, replace: true, preserveScroll: true });
 }
 
 function flattenFilters(filters) {
@@ -111,6 +111,11 @@ const handleDeleteRecord = (id) => {
     selectedRow.value = id;
     dialogConfirm.showDialog();
 }
+
+function getNestedValue(obj, path) {
+    return path.split('.').reduce((o, i) => o?.[i], obj);
+}
+
 </script>
 
 <template>
@@ -150,7 +155,7 @@ const handleDeleteRecord = (id) => {
         </template>
         <Column v-for="column in columns" :field="column.field" :header="column.header" :sortable="column.sortable" :style="column.style" >
             <template #body="{ data }">
-                {{ data[column.field] }}
+                {{ getNestedValue(data, column.field) }}
             </template>
             <template #filter="{ filterModel }">
                 <div class="flex gap-2 items-center">

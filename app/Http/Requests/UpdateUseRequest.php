@@ -26,6 +26,7 @@ class UpdateUseRequest extends FormRequest
         #validação
         $rules = [
             'name' => 'required|string|max:255',
+            'role_id' => 'required|integer|exists:roles,id',
             'email' => 'required|string|email|max:255|unique:users,email,' . $this->user,
         ];
 
@@ -45,6 +46,7 @@ class UpdateUseRequest extends FormRequest
         $userData = new UserData(
             name: $data['name'],
             email: $data['email'],
+            role_id: $data['role_id'],
         );
 
         if (!empty($data['password'])) {

@@ -37,6 +37,10 @@ class RoleRepository
         return Role::findById($id)->delete();
     }
 
+    public function all(): mixed
+    {
+        return Role::all();
+    }
 
     public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, string $search = '', int $page = 1, int $per_page = 5, array $appends): LengthAwarePaginator
     {

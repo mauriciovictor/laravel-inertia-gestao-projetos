@@ -25,12 +25,20 @@ const columns = [
         filter: true,
          style: 'width: 25%'
     },
+    {
+        header: 'Perfil',
+        field: 'role.name',
+        sortable: true,
+        filter: true,
+        style: 'width: 25%'
+    },
 ]
 
 const filters = ref({
     global: { value: null, matchMode: 'contains' },
     name:{ constraints: [{ value: null, matchMode: 'contains' }] },
     email:{ constraints: [{ value: null, matchMode: 'equals' }]},
+    'role.name':{ constraints: [{ value: null, matchMode: 'equals' }]},
 });
 </script>
 

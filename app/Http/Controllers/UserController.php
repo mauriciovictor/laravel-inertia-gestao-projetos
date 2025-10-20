@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUseRequest;
 use App\Http\Requests\UpdateUseRequest;
 use App\Repositories\Eloquent\Models\User;
+use App\UseCases\Perfis\GetPerfisToComboBox;
 use App\UseCases\Users\CreateUserUseCase;
 use App\UseCases\Users\DeleteUserUseCase;
 use App\UseCases\Users\GetUsersUseCase;
@@ -16,10 +17,11 @@ use Inertia\Response as InertiaResponse;
 class UserController
 {
     public function __construct(
-        private CreateUserUseCase $createUserUseCase,
-        private UpdateUserUseCase $updateUserUseCase,
-        private GetUsersUseCase   $getUsersUseCase,
-        private DeleteUserUseCase $deleteUserUseCase
+        private CreateUserUseCase   $createUserUseCase,
+        private UpdateUserUseCase   $updateUserUseCase,
+        private GetUsersUseCase     $getUsersUseCase,
+        private DeleteUserUseCase   $deleteUserUseCase,
+        private GetPerfisToComboBox $getPerfisToComboBox,
     )
     {
     }
@@ -27,7 +29,7 @@ class UserController
     public function index(Request $request): InertiaResponse
     {
         $users = $this->getUsersUseCase->execute(
-            fieldsFilters: ['name', 'email'],
+            fieldsFilters: ['name', 'email', 'role_name'],
             filterValues: $request->all(),
             fieldSortValues: [
                 'order' => $request->input('order'),
@@ -38,19 +40,20 @@ class UserController
             per_page: $request->input('per_page', 5),
             appends: $request->all()
         );
-
         return Inertia::render('Users/List', compact('users'));
     }
 
     public function create(Request $request)
     {
-        return Inertia::render('Users/Form');
+        $roles = $this->getPerfisToComboBox->execute();
+        return Inertia::render('Users/Form', compact('roles'));
     }
 
     public function edit(Request $request, int $id)
     {
         $user = User::find($id);
-        return Inertia::render('Users/Form', compact('user'));
+        $roles = $this->getPerfisToComboBox->execute();
+        return Inertia::render('Users/Form', compact('user', 'roles'));
     }
 
     public function update(UpdateUseRequest $request, int $id)

@@ -8,6 +8,7 @@ use App\Services\PermissionService;
 use App\UseCases\Perfis\CreatePerfilUseCase;
 use App\UseCases\Perfis\DeletePerfilUseCase;
 use App\UseCases\Perfis\GetPerfilUseCase;
+use App\UseCases\Perfis\GetPerfisToComboBox;
 use App\UseCases\Perfis\GetPerfisUseCase;
 use App\UseCases\Perfis\UpdatePerfilUseCase;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class PerfilController
         private GetPerfilUseCase    $getPerfilUseCase,
         private UpdatePerfilUseCase $updatePerfilUseCase,
         private DeletePerfilUseCase $deletePerfilUseCase,
+        private GetPerfisToComboBox $getPerfisToComboBox,
     )
     {
     }
@@ -77,5 +79,10 @@ class PerfilController
     {
         $this->deletePerfilUseCase->execute($id);
         return redirect()->route('roles.index')->with('success', 'Perfil deletado com sucesso');
+    }
+
+    public function openToComboBox()
+    {
+        return $this->getPerfisToComboBox->execute();
     }
 }

@@ -19,6 +19,7 @@ class UserRepository
         return $this->model->create([
             'name' => $userData->name,
             'email' => $userData->email,
+            'role_id' => $userData->role_id,
             'password' => $userData->password?->toHash(),
         ]);
     }
@@ -28,6 +29,7 @@ class UserRepository
         $data = [
             'name' => $userData->name,
             'email' => $userData->email,
+            'role_id' => $userData->role_id,
         ];
 
         if ($userData->password) {
@@ -45,7 +47,7 @@ class UserRepository
 
     public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, string $search = '', int $page = 1, int $per_page = 5, array $appends): AbstractPaginator
     {
-        $userQuery = User::query();
+        $userQuery = User::query()->with('role');
 
         $this
             ->applyFilters($userQuery, $fieldsFilters, $filterValues)
@@ -64,7 +66,13 @@ class UserRepository
                 $filterType = FilterTypeEnum::tryFrom($filter['match'] ?? '');
                 $operator = $filterType->getOperator();
                 $operatorValue = $filterType->getOperatorValue($filter['value']);
-                $query->where($key, $operator, $operatorValue);
+                if ($key === 'role_name') {
+                    $query->whereHas('role', function ($query) use ($operator, $operatorValue) {
+                        $query->where('name', $operator, $operatorValue);
+                    });
+                } else {
+                    $query->where($key, $operator, $operatorValue);
+                }
             }
         }
 
@@ -92,5 +100,10 @@ class UserRepository
         });
 
         return $this;
+    }
+
+    function findCountByRole(int $role_id)
+    {
+        return $this->model->where('role_id', $role_id)->count();
     }
 }
