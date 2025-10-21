@@ -121,3 +121,47 @@ register.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
+/**
+* @see \App\Http\Controllers\HomeController::__invoke
+* @see app/Http/Controllers/HomeController.php:9
+* @route '/home'
+*/
+export const home = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: home.url(options),
+    method: 'get',
+})
+
+home.definition = {
+    methods: ["get","head"],
+    url: '/home',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\HomeController::__invoke
+* @see app/Http/Controllers/HomeController.php:9
+* @route '/home'
+*/
+home.url = (options?: RouteQueryOptions) => {
+    return home.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\HomeController::__invoke
+* @see app/Http/Controllers/HomeController.php:9
+* @route '/home'
+*/
+home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: home.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\HomeController::__invoke
+* @see app/Http/Controllers/HomeController.php:9
+* @route '/home'
+*/
+home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: home.url(options),
+    method: 'head',
+})
+

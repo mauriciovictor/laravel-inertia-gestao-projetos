@@ -8,7 +8,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:web'])->group(function () {
-    Route::get('/home', HomeController::class);
+    Route::get('/home', HomeController::class)->name('home');
     Route::resource('users', UserController::class)->except('show');
     Route::prefix('roles')->name('roles.')->group(function () {
         Route::get('/open-combo-box', [PerfilController::class, 'openToComboBox'])->name('open-combo-box');

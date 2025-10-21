@@ -25,7 +25,8 @@ const form = useForm({
                 </div>
             </div>
 
-            <Form :action="user?.id? update(user?.id) : store()" :method="user?.id? 'put' : 'post'" #default="{ errors, resetAndClearErrors }" class="space-y-6">
+            <Form :action="user?.id? update(user?.id) : store()" :method="user?.id? 'post' : 'post'" #default="{ errors, resetAndClearErrors }" class="space-y-6">
+                <input type="hidden" name="_method" :value="user?.id? 'put' : 'post'"/>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <label class="flex flex-col">
                         <span class="text-sm font-medium text-gray-700 mb-2">Nome</span>

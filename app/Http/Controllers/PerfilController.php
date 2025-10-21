@@ -12,6 +12,7 @@ use App\UseCases\Perfis\GetPerfisToComboBox;
 use App\UseCases\Perfis\GetPerfisUseCase;
 use App\UseCases\Perfis\UpdatePerfilUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 
@@ -30,6 +31,10 @@ class PerfilController
 
     public function index(Request $request): InertiaResponse
     {
+        if (!Gate::allows('perfil-index')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
+
         $perfis = $this->getPerfisUseCase->execute(fieldsFilters: ['name', 'email'],
             filterValues: $request->all(),
             fieldSortValues: [
@@ -46,6 +51,9 @@ class PerfilController
 
     public function edit(Request $request, int $id)
     {
+        if (!Gate::allows('perfil-edit')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
         $features = PermissionService::getFeatures();
         $perfil = $this->getPerfilUseCase->execute($id);
         return Inertia::render('Perfis/Form', ['features' => $features, 'perfil' => $perfil]);;
@@ -53,6 +61,10 @@ class PerfilController
 
     public function update(UpdatePerfilRequest $request, int $id)
     {
+        if (!Gate::allows('perfil-update')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
+
         #cria o DTO a partir dos dados validados
         $perfilData = $request->toDTO();
 
@@ -64,12 +76,19 @@ class PerfilController
 
     public function create(Request $request)
     {
+        if (!Gate::allows('perfil-create')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
+
         $features = PermissionService::getFeatures();
         return Inertia::render('Perfis/Form', ['features' => $features]);;
     }
 
     public function store(CreatePerfilRequest $request)
     {
+        if (!Gate::allows('perfil-store')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
         $perfilData = $request->toDTO();
         $this->createPerfilUseCase->execute($perfilData);
         return redirect()->route('roles.index')->with('success', 'Perfil criado com sucesso');
@@ -77,6 +96,9 @@ class PerfilController
 
     public function destroy(int $id)
     {
+        if (!Gate::allows('perfil-delete')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
         $this->deletePerfilUseCase->execute($id);
         return redirect()->route('roles.index')->with('success', 'Perfil deletado com sucesso');
     }

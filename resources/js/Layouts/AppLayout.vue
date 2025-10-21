@@ -21,12 +21,14 @@ const items = ref([
                 label: 'Usuários',
                 icon: 'pi pi-user',
                 shortcut: 'CRTL+N',
+                can: 'users',
                 action: () =>  UsersIndex()
             },
             {
                 label: 'Perfis',
                 icon: 'pi pi-key',
                 shortcut: 'CRTL+S',
+                can: 'perfis',
                 action: () =>  perfilController.index()
             },
             {
@@ -72,13 +74,15 @@ const items = ref([
             </template>
             <template class="flex-1" #item="{ item, props }" >
                 <Link :href="item.action()" class="flex items-center" v-bind="props.action">
-                    <span :class="item.icon"/>
-                    <span>{{item.label}}</span>
+                    <MenuCan :can="item.can">
+                        <span :class="item.icon"/>
+                        <span>{{item.label}}</span>
 
-                    <span v-if="item.shortcut"
-                          class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{
-                            item.shortcut
-                        }}</span>
+                        <span v-if="item.shortcut"
+                              class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{
+                                item.shortcut
+                            }}</span>
+                    </MenuCan>
                 </Link>
             </template>
             <template  #end >

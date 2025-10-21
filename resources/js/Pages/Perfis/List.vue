@@ -4,6 +4,7 @@ import DefaultDataTable  from "../../Components/ui/DefaultDataTable.vue";
 import {ref} from "vue";
 import {route} from "ziggy-js";
 import {router} from "@inertiajs/vue3";
+import ActionCan from "../../Components/ActionCan.vue";
 const props = defineProps({
     perfis: Object,
 })
@@ -25,13 +26,16 @@ const filters = ref({
     global: { value: null, matchMode: 'contains' },
     name:{ constraints: [{ value: null, matchMode: 'contains' }] },
 });
+
 </script>
 
 <template>
     <AppLayout>
         <div class="flex items-center justify-between">
             <h3 class="text-3xl text-neutral-900 font-medium mb-8">Perfis de Usuários </h3>
-            <Button label="Novo Perfil" severity="success" icon="pi pi-plus" class="p-button-outlined" @click="router.get(route('roles.create'))"/>
+            <ActionCan feature="perfis" action="create" >
+              <Button label="Novo Perfil" severity="success" icon="pi pi-plus" class="p-button-outlined" @click="router.get(route('roles.create'))"/>
+            </ActionCan>
         </div>
         <div class="bg-white border border-gray-100 rounded-lg shadow-md w-full p-12">
             <DefaultDataTable
@@ -41,6 +45,8 @@ const filters = ref({
                 :route-delete="routeDelete"
                 :columns="columns"
                 :filters="filters"
+                canFeature="perfis"
+                :canActions="['edit', 'delete']"
             />
         </div>
     </AppLayout>

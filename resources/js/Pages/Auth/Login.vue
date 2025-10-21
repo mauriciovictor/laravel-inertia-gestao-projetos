@@ -1,8 +1,6 @@
 <script setup>
-import {Form, useForm} from "@inertiajs/vue3";
+import {useForm} from "@inertiajs/vue3";
 import login from "../../routes/login/index.js";
-
-import { ref } from "vue";
 
 const form = useForm({
     email: "",

@@ -4,6 +4,7 @@ import DefaultDataTable  from "../../Components/ui/DefaultDataTable.vue";
 import {ref} from "vue";
 import {route} from "ziggy-js";
 import {router} from "@inertiajs/vue3";
+import ActionCan from "../../Components/ActionCan.vue";
 const props = defineProps({
     users: Object,
 })
@@ -46,7 +47,9 @@ const filters = ref({
     <AppLayout>
         <div class="flex items-center justify-between">
             <h3 class="text-3xl text-neutral-900 font-medium mb-8">Usuários </h3>
-            <Button label="Novo Usuário" severity="success" icon="pi pi-plus" class="p-button-outlined" @click="router.get('/users/create')"/>
+            <ActionCan feature="users" action="create" >
+                <Button label="Novo Usuário" severity="success" icon="pi pi-plus" class="p-button-outlined" @click="router.get('/users/create')"/>
+            </ActionCan>
         </div>
         <div class="bg-white border border-gray-100 rounded-lg shadow-md w-full p-12">
             <DefaultDataTable
@@ -56,6 +59,8 @@ const filters = ref({
                 :route-delete="routeDelete"
                 :columns="columns"
                 :filters="filters"
+                canFeature="users"
+                :canActions="['edit', 'delete']"
             />
         </div>
     </AppLayout>

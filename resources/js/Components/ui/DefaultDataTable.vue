@@ -3,6 +3,7 @@ import {router} from "@inertiajs/vue3";
 import {ref, computed, watch} from "vue";
 import debounce from 'lodash.debounce';
 import {useDialogConfirm} from "../../composables/useDialogConfirm.js";
+import ActionCan from "../ActionCan.vue";
 
 const props = defineProps({
     data: Object,
@@ -10,7 +11,9 @@ const props = defineProps({
     route: String,
     routeEdit: String,
     routeDelete: String,
-    filters: Object
+    filters: Object,
+    canFeature: String,
+    canActions: Array,
 })
 
 const filters = ref({
@@ -166,10 +169,14 @@ function getNestedValue(obj, path) {
 
         <Column header="Ações" style="width: 25%">
             <template #body="{ data }">
-                <Link :href="props.routeEdit.replace(':id', data.id)">
-                    <Button type="button" icon="pi pi-pencil" text />
-                </Link>
-                <Button @click="handleDeleteRecord(data.id)" type="button"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
+                <ActionCan :feature="canFeature" :action="canActions[0]" >
+                    <Link :href="props.routeEdit.replace(':id', data.id)">
+                        <Button type="button" icon="pi pi-pencil" text />
+                    </Link>
+                </ActionCan>
+                <ActionCan :feature="canFeature" :action="canActions[1]" >
+                    <Button @click="handleDeleteRecord(data.id)" type="button"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
+                </ActionCan>
             </template>
         </Column>
     </DataTable>

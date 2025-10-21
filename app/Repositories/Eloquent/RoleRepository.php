@@ -7,6 +7,7 @@ use App\Repositories\Eloquent\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\AbstractPaginator;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class RoleRepository
@@ -90,5 +91,22 @@ class RoleRepository
         });
 
         return $this;
+    }
+
+    public function assignRoleToUser(int $user_id, int $role_id): void
+    {
+        DB::table('model_has_roles')->insert([
+            'role_id' => $role_id,
+            'model_type' => User::class,
+            'model_id' => $user_id,
+        ]);
+    }
+
+    public function removeRoleFromUser(int $user_id, int $role_id): void
+    {
+        DB::table('model_has_roles')
+            ->where('role_id', $role_id)
+            ->where('model_id', $user_id)
+            ->delete();
     }
 }

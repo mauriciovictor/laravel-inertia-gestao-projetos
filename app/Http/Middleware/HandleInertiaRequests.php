@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\PermissionsEnum;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -36,6 +37,26 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            'auth.user' => [
+                'permissions' => [
+                    'menus' => [
+                        'users' => $request->user()->hasPermissionTo(PermissionsEnum::USER_VIEW->value),
+                        'perfis' => $request->user()->hasPermissionTo(PermissionsEnum::ROLES_VIEW->value),
+                    ],
+                    'features' => [
+                        'users' => [
+                            'create' => $request->user()->hasPermissionTo(PermissionsEnum::USER_CREATE->value),
+                            'edit' => $request->user()->hasPermissionTo(PermissionsEnum::USER_EDIT->value),
+                            'delete' => $request->user()->hasPermissionTo(PermissionsEnum::USER_DELETE->value),
+                        ],
+                        'perfis' => [
+                            'create' => $request->user()->hasPermissionTo(PermissionsEnum::ROLES_CREATE->value),
+                            'edit' => $request->user()->hasPermissionTo(PermissionsEnum::ROLES_EDIT->value),
+                            'delete' => $request->user()->hasPermissionTo(PermissionsEnum::ROLES_DELETE->value),
+                        ]
+                    ]
+                ]
+            ],
             'flash' => [
                 'success' => fn() => $request->session()->get('success'),
                 'error' => fn() => $request->session()->get('error'),

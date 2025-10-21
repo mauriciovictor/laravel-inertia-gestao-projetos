@@ -23,12 +23,15 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
             if (!app()->environment(['testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
-                return back()->with(['error' => $exception->getMessage() ?? 'Ocorreu um erro inesperado.']);
+                return redirect()
+                    ->back()
+                    ->with(['error' => $exception->getMessage() ?? 'Ocorreu um erro inesperado.']);
             } elseif ($response->getStatusCode() === 419) {
                 return back()->with([
                     'message' => 'The page expired, please try again.',
                 ]);
             }
+
             return $response;
         });
     })->create();

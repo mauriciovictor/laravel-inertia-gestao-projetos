@@ -4,6 +4,7 @@ import {createApp, h} from 'vue';
 import {createInertiaApp} from '@inertiajs/vue3';
 import registerPrimeVue from './plugins/primevue';
 import { Link } from '@inertiajs/vue3'
+import MenuCan from "./Components/MenuCan.vue";
 
 createInertiaApp({
     resolve: name => {
@@ -15,6 +16,7 @@ createInertiaApp({
         app.use(plugin)
         registerPrimeVue(app)
 
+        app.component('MenuCan', MenuCan)
         app.component('Link', Link)
         app.mount(el)
         return app

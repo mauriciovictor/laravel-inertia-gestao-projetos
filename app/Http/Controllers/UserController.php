@@ -13,6 +13,7 @@ use App\UseCases\Users\UpdateUserUseCase;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+use Illuminate\Support\Facades\Gate;
 
 class UserController
 {
@@ -28,6 +29,10 @@ class UserController
 
     public function index(Request $request): InertiaResponse
     {
+        if (!Gate::allows('user-index')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
+
         $users = $this->getUsersUseCase->execute(
             fieldsFilters: ['name', 'email', 'role_name'],
             filterValues: $request->all(),
@@ -45,12 +50,18 @@ class UserController
 
     public function create(Request $request)
     {
+        if (!Gate::allows('user-create')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
         $roles = $this->getPerfisToComboBox->execute();
         return Inertia::render('Users/Form', compact('roles'));
     }
 
     public function edit(Request $request, int $id)
     {
+        if (!Gate::allows('user-edit')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
         $user = User::find($id);
         $roles = $this->getPerfisToComboBox->execute();
         return Inertia::render('Users/Form', compact('user', 'roles'));
@@ -58,6 +69,9 @@ class UserController
 
     public function update(UpdateUseRequest $request, int $id)
     {
+        if (!Gate::allows('user-update')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
         #cria o DTO a partir dos dados validados
         $userData = $request->toDTO();
 
@@ -69,6 +83,9 @@ class UserController
 
     public function store(CreateUseRequest $request)
     {
+        if (!Gate::allows('user-store')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
         #cria o DTO a partir dos dados validados
         $userData = $request->toDTO();
 
@@ -80,6 +97,9 @@ class UserController
 
     public function destroy(int $id)
     {
+        if (!Gate::allows('user-delete')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
         $this->deleteUserUseCase->execute($id);
         return redirect()->route('users.index')->with('success', 'Usuário deletado com sucesso');
     }

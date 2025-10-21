@@ -14,14 +14,16 @@ class UserRepository
     {
     }
 
-    public function create(UserData $userData)
+    public function create(UserData $userData): User
     {
-        return $this->model->create([
+        $user = $this->model->create([
             'name' => $userData->name,
             'email' => $userData->email,
             'role_id' => $userData->role_id,
             'password' => $userData->password?->toHash(),
         ]);
+
+        return $user;
     }
 
     public function update($id, UserData $userData)
@@ -36,7 +38,9 @@ class UserRepository
             $data['password'] = $userData->password->toHash();
         }
 
-        return $this->model->find($id)->update($data);
+        $this->model->find($id)->update($data);
+
+        return $this->model->find($id);
     }
 
     public function delete(int $user_id): ?bool
