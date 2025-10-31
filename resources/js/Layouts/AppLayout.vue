@@ -1,15 +1,18 @@
 <script setup>
 import {ref} from "vue";
-import {index as UsersIndex} from "../actions/App/Http/Controllers/UserController.js";
+
 import HomeRender from "../actions/App/Http/Controllers/HomeController.js";
 import {useToastValidationsErrors} from "../composables/useToastValidationsErrors.js";
 import {useToastFlashMessages} from "../composables/useToastFlashMessages.js";
-import perfilController from "../actions/App/Http/Controllers/PerfilController.js";
 import {logout} from "../routes/index.js";
 import {router} from "@inertiajs/vue3";
+import ListUserController from "../actions/App/Http/Controllers/Users/ListUserController.js";
+import ListPerfilController from "../actions/App/Http/Controllers/Perfis/ListPerfilController.js";
+
 
 const toastValidationErrors =  useToastValidationsErrors()
 toastValidationErrors.load()
+
 
 useToastFlashMessages()
 
@@ -22,20 +25,20 @@ const items = ref([
                 icon: 'pi pi-user',
                 shortcut: 'CRTL+N',
                 can: 'users',
-                action: () =>  UsersIndex()
+                action: () =>  ListUserController()
             },
             {
                 label: 'Perfis',
                 icon: 'pi pi-key',
                 shortcut: 'CRTL+S',
                 can: 'perfis',
-                action: () =>  perfilController.index()
+                action: () =>  ListPerfilController()
             },
             {
                 label: 'projetos',
                 icon: 'pi pi-cog',
                 shortcut: 'CRTL+O',
-                action: () =>  UsersIndex()
+                action: () =>  ListUserController()
             },
         ]
     },

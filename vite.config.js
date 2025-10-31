@@ -5,6 +5,9 @@ import tailwindcss from '@tailwindcss/vite'
 import {wayfinder} from "@laravel/vite-plugin-wayfinder";
 
 export default defineConfig({
+    server: {
+        host: '0.0.0.0',
+    },
     plugins: [
         wayfinder(),
         vue(),

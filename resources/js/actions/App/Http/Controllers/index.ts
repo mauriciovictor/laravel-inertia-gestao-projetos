@@ -1,11 +1,11 @@
 import HomeController from './HomeController'
-import UserController from './UserController'
-import PerfilController from './PerfilController'
+import Users from './Users'
+import Perfis from './Perfis'
 
 const Controllers = {
     HomeController: Object.assign(HomeController, HomeController),
-    UserController: Object.assign(UserController, UserController),
-    PerfilController: Object.assign(PerfilController, PerfilController),
+    Users: Object.assign(Users, Users),
+    Perfis: Object.assign(Perfis, Perfis),
 }
 
 export default Controllers

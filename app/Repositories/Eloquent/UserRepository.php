@@ -65,11 +65,13 @@ class UserRepository
 
     public function applyFilters(Builder &$query, array $fieldsFilters, array $filterValues): self
     {
+
         foreach ($filterValues as $key => $filter) {
             if (in_array($key, $fieldsFilters)) {
                 $filterType = FilterTypeEnum::tryFrom($filter['match'] ?? '');
                 $operator = $filterType->getOperator();
                 $operatorValue = $filterType->getOperatorValue($filter['value']);
+
                 if ($key === 'role_name') {
                     $query->whereHas('role', function ($query) use ($operator, $operatorValue) {
                         $query->where('name', $operator, $operatorValue);

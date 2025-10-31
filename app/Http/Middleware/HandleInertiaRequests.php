@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Enums\PermissionsEnum;
+use App\Repositories\Eloquent\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -36,8 +37,10 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return array_merge(parent::share($request), [
-            'auth.user' => [
+        $shared = [];
+        
+        if (Auth()->check()) {
+            $shared['auth.user'] = [
                 'permissions' => [
                     'menus' => [
                         'users' => $request->user()->hasPermissionTo(PermissionsEnum::USER_VIEW->value),
@@ -56,7 +59,11 @@ class HandleInertiaRequests extends Middleware
                         ]
                     ]
                 ]
-            ],
+            ];
+        }
+
+        return array_merge(parent::share($request), [
+            ...$shared,
             'flash' => [
                 'success' => fn() => $request->session()->get('success'),
                 'error' => fn() => $request->session()->get('error'),

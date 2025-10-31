@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Perfis;
 
 use App\DTOs\PerfilData;
-use App\ValueObjects\Password;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreatePerfilRequest extends FormRequest

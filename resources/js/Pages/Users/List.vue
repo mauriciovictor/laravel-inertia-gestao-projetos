@@ -11,6 +11,7 @@ const props = defineProps({
 const pageRoute = ref(route('users.index'))
 const pageRouteEdit = ref(route('users.edit', ':id'))
 const routeDelete = ref(route('users.destroy', ':id'))
+
 const columns = [
     {
         header: 'Nome',

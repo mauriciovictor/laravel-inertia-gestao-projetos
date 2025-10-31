@@ -1,8 +1,9 @@
 <script setup>
 import AppLayout from '../../Layouts/AppLayout.vue'
 import {Form, useForm} from "@inertiajs/vue3";
-import {store, update} from "../../actions/App/Http/Controllers/UserController.js";
 import {route} from "ziggy-js";
+import UpdateUserController from "../../actions/App/Http/Controllers/Users/UpdateUserController.js";
+import StoreUserController from "../../actions/App/Http/Controllers/Users/StoreUserController.js";
 
 const props = defineProps(['user', 'roles'])
 //carrega os dados pra atualização
@@ -25,7 +26,7 @@ const form = useForm({
                 </div>
             </div>
 
-            <Form :action="user?.id? update(user?.id) : store()" :method="user?.id? 'post' : 'post'" #default="{ errors, resetAndClearErrors }" class="space-y-6">
+            <Form :action="user?.id? UpdateUserController(user?.id) : StoreUserController()" :method="user?.id? 'post' : 'post'" #default="{ errors, resetAndClearErrors }" class="space-y-6">
                 <input type="hidden" name="_method" :value="user?.id? 'put' : 'post'"/>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <label class="flex flex-col">

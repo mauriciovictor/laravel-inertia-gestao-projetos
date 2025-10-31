@@ -1,51 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
-* @see \App\Http\Controllers\PerfilController::openComboBox
-* @see app/Http/Controllers/PerfilController.php:106
-* @route '/roles/open-combo-box'
-*/
-export const openComboBox = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: openComboBox.url(options),
-    method: 'get',
-})
-
-openComboBox.definition = {
-    methods: ["get","head"],
-    url: '/roles/open-combo-box',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\PerfilController::openComboBox
-* @see app/Http/Controllers/PerfilController.php:106
-* @route '/roles/open-combo-box'
-*/
-openComboBox.url = (options?: RouteQueryOptions) => {
-    return openComboBox.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\PerfilController::openComboBox
-* @see app/Http/Controllers/PerfilController.php:106
-* @route '/roles/open-combo-box'
-*/
-openComboBox.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: openComboBox.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PerfilController::openComboBox
-* @see app/Http/Controllers/PerfilController.php:106
-* @route '/roles/open-combo-box'
-*/
-openComboBox.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: openComboBox.url(options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\PerfilController::index
-* @see app/Http/Controllers/PerfilController.php:32
+* @see \App\Http\Controllers\Perfis\ListPerfilController::__invoke
+* @see app/Http/Controllers/Perfis/ListPerfilController.php:19
 * @route '/roles'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,8 +15,8 @@ index.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\PerfilController::index
-* @see app/Http/Controllers/PerfilController.php:32
+* @see \App\Http\Controllers\Perfis\ListPerfilController::__invoke
+* @see app/Http/Controllers/Perfis/ListPerfilController.php:19
 * @route '/roles'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -68,8 +24,8 @@ index.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\PerfilController::index
-* @see app/Http/Controllers/PerfilController.php:32
+* @see \App\Http\Controllers\Perfis\ListPerfilController::__invoke
+* @see app/Http/Controllers/Perfis/ListPerfilController.php:19
 * @route '/roles'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -78,8 +34,8 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\PerfilController::index
-* @see app/Http/Controllers/PerfilController.php:32
+* @see \App\Http\Controllers\Perfis\ListPerfilController::__invoke
+* @see app/Http/Controllers/Perfis/ListPerfilController.php:19
 * @route '/roles'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -88,8 +44,8 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\PerfilController::create
-* @see app/Http/Controllers/PerfilController.php:77
+* @see \App\Http\Controllers\Perfis\CreatePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/CreatePerfilController.php:11
 * @route '/roles/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -103,8 +59,8 @@ create.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\PerfilController::create
-* @see app/Http/Controllers/PerfilController.php:77
+* @see \App\Http\Controllers\Perfis\CreatePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/CreatePerfilController.php:11
 * @route '/roles/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -112,8 +68,8 @@ create.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\PerfilController::create
-* @see app/Http/Controllers/PerfilController.php:77
+* @see \App\Http\Controllers\Perfis\CreatePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/CreatePerfilController.php:11
 * @route '/roles/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -122,8 +78,8 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\PerfilController::create
-* @see app/Http/Controllers/PerfilController.php:77
+* @see \App\Http\Controllers\Perfis\CreatePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/CreatePerfilController.php:11
 * @route '/roles/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -132,43 +88,9 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\PerfilController::store
-* @see app/Http/Controllers/PerfilController.php:87
-* @route '/roles'
-*/
-export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: store.url(options),
-    method: 'post',
-})
-
-store.definition = {
-    methods: ["post"],
-    url: '/roles',
-} satisfies RouteDefinition<["post"]>
-
-/**
-* @see \App\Http\Controllers\PerfilController::store
-* @see app/Http/Controllers/PerfilController.php:87
-* @route '/roles'
-*/
-store.url = (options?: RouteQueryOptions) => {
-    return store.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\PerfilController::store
-* @see app/Http/Controllers/PerfilController.php:87
-* @route '/roles'
-*/
-store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: store.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\PerfilController::edit
-* @see app/Http/Controllers/PerfilController.php:52
-* @route '/roles/{role}/edit'
+* @see \App\Http\Controllers\Perfis\EditPerfilController::__invoke
+* @see app/Http/Controllers/Perfis/EditPerfilController.php:19
+* @route '/roles/{role}'
 */
 export const edit = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
@@ -177,13 +99,13 @@ export const edit = (args: { role: string | number } | [role: string | number ] 
 
 edit.definition = {
     methods: ["get","head"],
-    url: '/roles/{role}/edit',
+    url: '/roles/{role}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\PerfilController::edit
-* @see app/Http/Controllers/PerfilController.php:52
-* @route '/roles/{role}/edit'
+* @see \App\Http\Controllers\Perfis\EditPerfilController::__invoke
+* @see app/Http/Controllers/Perfis/EditPerfilController.php:19
+* @route '/roles/{role}'
 */
 edit.url = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -208,9 +130,9 @@ edit.url = (args: { role: string | number } | [role: string | number ] | string 
 }
 
 /**
-* @see \App\Http\Controllers\PerfilController::edit
-* @see app/Http/Controllers/PerfilController.php:52
-* @route '/roles/{role}/edit'
+* @see \App\Http\Controllers\Perfis\EditPerfilController::__invoke
+* @see app/Http/Controllers/Perfis/EditPerfilController.php:19
+* @route '/roles/{role}'
 */
 edit.get = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
@@ -218,9 +140,9 @@ edit.get = (args: { role: string | number } | [role: string | number ] | string 
 })
 
 /**
-* @see \App\Http\Controllers\PerfilController::edit
-* @see app/Http/Controllers/PerfilController.php:52
-* @route '/roles/{role}/edit'
+* @see \App\Http\Controllers\Perfis\EditPerfilController::__invoke
+* @see app/Http/Controllers/Perfis/EditPerfilController.php:19
+* @route '/roles/{role}'
 */
 edit.head = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
@@ -228,70 +150,8 @@ edit.head = (args: { role: string | number } | [role: string | number ] | string
 })
 
 /**
-* @see \App\Http\Controllers\PerfilController::update
-* @see app/Http/Controllers/PerfilController.php:62
-* @route '/roles/{role}'
-*/
-export const update = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
-    url: update.url(args, options),
-    method: 'put',
-})
-
-update.definition = {
-    methods: ["put","patch"],
-    url: '/roles/{role}',
-} satisfies RouteDefinition<["put","patch"]>
-
-/**
-* @see \App\Http\Controllers\PerfilController::update
-* @see app/Http/Controllers/PerfilController.php:62
-* @route '/roles/{role}'
-*/
-update.url = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { role: args }
-    }
-
-    if (Array.isArray(args)) {
-        args = {
-            role: args[0],
-        }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-        role: args.role,
-    }
-
-    return update.definition.url
-            .replace('{role}', parsedArgs.role.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\PerfilController::update
-* @see app/Http/Controllers/PerfilController.php:62
-* @route '/roles/{role}'
-*/
-update.put = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
-    url: update.url(args, options),
-    method: 'put',
-})
-
-/**
-* @see \App\Http\Controllers\PerfilController::update
-* @see app/Http/Controllers/PerfilController.php:62
-* @route '/roles/{role}'
-*/
-update.patch = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
-    url: update.url(args, options),
-    method: 'patch',
-})
-
-/**
-* @see \App\Http\Controllers\PerfilController::destroy
-* @see app/Http/Controllers/PerfilController.php:97
+* @see \App\Http\Controllers\Perfis\DeletePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/DeletePerfilController.php:16
 * @route '/roles/{role}'
 */
 export const destroy = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -305,8 +165,8 @@ destroy.definition = {
 } satisfies RouteDefinition<["delete"]>
 
 /**
-* @see \App\Http\Controllers\PerfilController::destroy
-* @see app/Http/Controllers/PerfilController.php:97
+* @see \App\Http\Controllers\Perfis\DeletePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/DeletePerfilController.php:16
 * @route '/roles/{role}'
 */
 destroy.url = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -332,8 +192,8 @@ destroy.url = (args: { role: string | number } | [role: string | number ] | stri
 }
 
 /**
-* @see \App\Http\Controllers\PerfilController::destroy
-* @see app/Http/Controllers/PerfilController.php:97
+* @see \App\Http\Controllers\Perfis\DeletePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/DeletePerfilController.php:16
 * @route '/roles/{role}'
 */
 destroy.delete = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -341,14 +201,144 @@ destroy.delete = (args: { role: string | number } | [role: string | number ] | s
     method: 'delete',
 })
 
+/**
+* @see \App\Http\Controllers\Perfis\StorePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/StorePerfilController.php:17
+* @route '/roles'
+*/
+export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
+    method: 'post',
+})
+
+store.definition = {
+    methods: ["post"],
+    url: '/roles',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Perfis\StorePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/StorePerfilController.php:17
+* @route '/roles'
+*/
+store.url = (options?: RouteQueryOptions) => {
+    return store.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Perfis\StorePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/StorePerfilController.php:17
+* @route '/roles'
+*/
+store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Perfis\UpdatePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/UpdatePerfilController.php:17
+* @route '/roles/{role}'
+*/
+export const update = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+    url: update.url(args, options),
+    method: 'put',
+})
+
+update.definition = {
+    methods: ["put"],
+    url: '/roles/{role}',
+} satisfies RouteDefinition<["put"]>
+
+/**
+* @see \App\Http\Controllers\Perfis\UpdatePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/UpdatePerfilController.php:17
+* @route '/roles/{role}'
+*/
+update.url = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { role: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            role: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        role: args.role,
+    }
+
+    return update.definition.url
+            .replace('{role}', parsedArgs.role.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Perfis\UpdatePerfilController::__invoke
+* @see app/Http/Controllers/Perfis/UpdatePerfilController.php:17
+* @route '/roles/{role}'
+*/
+update.put = (args: { role: string | number } | [role: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+    url: update.url(args, options),
+    method: 'put',
+})
+
+/**
+* @see \App\Http\Controllers\Perfis\ListToComboBoxController::__invoke
+* @see app/Http/Controllers/Perfis/ListToComboBoxController.php:15
+* @route '/roles/open-combo-box'
+*/
+export const openComboBox = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: openComboBox.url(options),
+    method: 'get',
+})
+
+openComboBox.definition = {
+    methods: ["get","head"],
+    url: '/roles/open-combo-box',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Perfis\ListToComboBoxController::__invoke
+* @see app/Http/Controllers/Perfis/ListToComboBoxController.php:15
+* @route '/roles/open-combo-box'
+*/
+openComboBox.url = (options?: RouteQueryOptions) => {
+    return openComboBox.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Perfis\ListToComboBoxController::__invoke
+* @see app/Http/Controllers/Perfis/ListToComboBoxController.php:15
+* @route '/roles/open-combo-box'
+*/
+openComboBox.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: openComboBox.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Perfis\ListToComboBoxController::__invoke
+* @see app/Http/Controllers/Perfis/ListToComboBoxController.php:15
+* @route '/roles/open-combo-box'
+*/
+openComboBox.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: openComboBox.url(options),
+    method: 'head',
+})
+
 const roles = {
-    openComboBox: Object.assign(openComboBox, openComboBox),
     index: Object.assign(index, index),
     create: Object.assign(create, create),
-    store: Object.assign(store, store),
     edit: Object.assign(edit, edit),
-    update: Object.assign(update, update),
     destroy: Object.assign(destroy, destroy),
+    store: Object.assign(store, store),
+    update: Object.assign(update, update),
+    openComboBox: Object.assign(openComboBox, openComboBox),
 }
 
 export default roles
