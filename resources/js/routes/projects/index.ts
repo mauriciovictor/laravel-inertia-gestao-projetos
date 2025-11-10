@@ -235,12 +235,65 @@ update.put = (args: { project: string | number } | [project: string | number ] |
     method: 'put',
 })
 
+/**
+* @see \App\Http\Controllers\Projects\DeleteProjectController::__invoke
+* @see app/Http/Controllers/Projects/DeleteProjectController.php:13
+* @route '/projects/{project}'
+*/
+export const destroy = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroy.url(args, options),
+    method: 'delete',
+})
+
+destroy.definition = {
+    methods: ["delete"],
+    url: '/projects/{project}',
+} satisfies RouteDefinition<["delete"]>
+
+/**
+* @see \App\Http\Controllers\Projects\DeleteProjectController::__invoke
+* @see app/Http/Controllers/Projects/DeleteProjectController.php:13
+* @route '/projects/{project}'
+*/
+destroy.url = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { project: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            project: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        project: args.project,
+    }
+
+    return destroy.definition.url
+            .replace('{project}', parsedArgs.project.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Projects\DeleteProjectController::__invoke
+* @see app/Http/Controllers/Projects/DeleteProjectController.php:13
+* @route '/projects/{project}'
+*/
+destroy.delete = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroy.url(args, options),
+    method: 'delete',
+})
+
 const projects = {
     index: Object.assign(index, index),
     create: Object.assign(create, create),
     store: Object.assign(store, store),
     edit: Object.assign(edit, edit),
     update: Object.assign(update, update),
+    destroy: Object.assign(destroy, destroy),
 }
 
 export default projects

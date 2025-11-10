@@ -37,4 +37,9 @@ class ProjectRepository
     {
         return $this->model->paginate(perPage: $per_page, page: $page);
     }
+
+    public function delete(string $id)
+    {
+        return $this->model->destroy($id);
+    }
 }
