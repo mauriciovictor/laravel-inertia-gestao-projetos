@@ -21,6 +21,14 @@ use App\Http\Controllers\Perfis\ {
     ListToComboBoxController
 };
 
+use App\Http\Controllers\Projects\ {
+    ListProjectsController,
+    CreateProjectController,
+    StoreProjectController,
+    EditProjectController,
+    UpdateProjectController,
+};
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -49,6 +57,15 @@ Route::middleware(['auth:web'])->group(function () {
         Route::post('/', StorePerfilController::class)->name('store');
         Route::put('/{role}', UpdatePerfilController::class)->name('update');
         Route::get('/open-combo-box', ListToComboBoxController::class)->name('open-combo-box');
+    });
+
+    ##ROTAS DE PROJETOS##
+    Route::prefix('projects')->name('projects.')->group(function () {
+        Route::get('/', ListProjectsController::class)->name('index');
+        Route::get('/create', CreateProjectController::class)->name('create');
+        Route::post('/', StoreProjectController::class)->name('store');
+        Route::get('/{project}', EditProjectController::class)->name('edit');
+        Route::put('/{project}', UpdateProjectController::class)->name('update');
     });
 });
 

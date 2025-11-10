@@ -10,8 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role_id')->nullable()->constrained('roles')->cascadeOnDelete();
+        Schema::create('projects', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('title');
+            $table->string('description')->nullable();
+            $table->string('status')->default('active');
+            $table->timestamps();
         });
     }
 
@@ -20,8 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['role_id']);
-        });
+        Schema::dropIfExists('projects');
     }
 };

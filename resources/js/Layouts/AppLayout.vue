@@ -8,6 +8,7 @@ import {logout} from "../routes/index.js";
 import {router} from "@inertiajs/vue3";
 import ListUserController from "../actions/App/Http/Controllers/Users/ListUserController.js";
 import ListPerfilController from "../actions/App/Http/Controllers/Perfis/ListPerfilController.js";
+import ListProjectsController from "../actions/App/Http/Controllers/Projects/ListProjectsController.js";
 
 
 const toastValidationErrors =  useToastValidationsErrors()
@@ -38,7 +39,8 @@ const items = ref([
                 label: 'projetos',
                 icon: 'pi pi-cog',
                 shortcut: 'CRTL+O',
-                action: () =>  ListUserController()
+                can: 'perfis',
+                action: () =>  ListProjectsController()
             },
         ]
     },

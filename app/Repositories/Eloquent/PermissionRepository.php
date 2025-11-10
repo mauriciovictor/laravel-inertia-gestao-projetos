@@ -12,7 +12,7 @@ class PermissionRepository
 
     public function create(string $name)
     {
-        $this->model->create($data);
+        $this->model->create(['name' => $name, 'guard_name' => 'web']);
     }
 
     public function findByName(string $name): ?Permission
