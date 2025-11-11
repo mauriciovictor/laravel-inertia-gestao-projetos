@@ -30,6 +30,14 @@ use App\Http\Controllers\Projects\ {
     DeleteProjectController
 };
 
+use App\Http\Controllers\Projects\Cards\ {
+    ListByProjectController,
+    CreateCardController,
+    UpdateCardController,
+    DeleteCardController
+};
+
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -68,6 +76,14 @@ Route::middleware(['auth:web'])->group(function () {
         Route::get('/{project}', EditProjectController::class)->name('edit');
         Route::put('/{project}', UpdateProjectController::class)->name('update');
         Route::delete('/{project}', DeleteProjectController::class)->name('destroy');
+
+        ##ROTAS DE PROJETOS CARDS##
+        Route::name('cards.')->group(function () {
+            Route::get('/{project}/cards', ListByProjectController::class)->name('index');
+            Route::post('/{project}/cards', CreateCardController::class)->name('store');
+            Route::put('/{project}/cards/{card}', UpdateCardController::class)->name('update');
+            Route::delete('/{project}/cards/{card}', DeleteCardController::class)->name('destroy');
+        });
     });
 });
 

@@ -4,6 +4,7 @@ import StoreProjectController from './StoreProjectController'
 import EditProjectController from './EditProjectController'
 import UpdateProjectController from './UpdateProjectController'
 import DeleteProjectController from './DeleteProjectController'
+import Cards from './Cards'
 
 const Projects = {
     ListProjectsController: Object.assign(ListProjectsController, ListProjectsController),
@@ -12,6 +13,7 @@ const Projects = {
     EditProjectController: Object.assign(EditProjectController, EditProjectController),
     UpdateProjectController: Object.assign(UpdateProjectController, UpdateProjectController),
     DeleteProjectController: Object.assign(DeleteProjectController, DeleteProjectController),
+    Cards: Object.assign(Cards, Cards),
 }
 
 export default Projects
