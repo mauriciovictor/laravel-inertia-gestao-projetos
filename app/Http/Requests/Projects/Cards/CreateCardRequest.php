@@ -29,6 +29,7 @@ class CreateCardRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'color' => 'required|string',
             'project' => 'required|exists:projects,id',
         ];
     }
@@ -40,6 +41,7 @@ class CreateCardRequest extends FormRequest
         return new ProjectCardData(
             project_id: $data['project'],
             title: $data['title'],
+            color: $data['color'],
             description: $data['description'],
         );
     }

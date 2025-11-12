@@ -9,6 +9,7 @@ class ProjectCardData
     public function __construct(
         public string $project_id,
         public string $title,
+        public string $color,
         public string $description,
     )
     {
@@ -20,6 +21,7 @@ class ProjectCardData
         return [
             'project_id' => $this->project_id,
             'title' => $this->title,
+            'color' => $this->color,
             'description' => $this->description,
         ];
     }

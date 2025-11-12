@@ -17,7 +17,7 @@ import {
     ConfirmDialog,
     AutoComplete,
     Select,
-    Card, Paginator, Popover, Textarea
+    Card, Paginator, Popover, Textarea, ColorPicker
 } from "primevue";
 
 import {ThemeDefault} from "../Themes/primevue/default";
@@ -64,6 +64,7 @@ export default function registerPrimeVue(app) {
     app.component('Paginator', Paginator)
     app.component('Textarea', Textarea)
     app.component('Popover', Popover)
+    app.component('ColorPicker', ColorPicker)
 
     app.use(ToastService);
     app.use(ConfirmationService);

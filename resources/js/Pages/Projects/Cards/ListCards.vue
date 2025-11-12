@@ -2,12 +2,10 @@
 import AppLayout     from "../../../Layouts/AppLayout.vue";
 import {router, useForm, Form, Link} from "@inertiajs/vue3";
 import ActionCan from "../../../Components/ActionCan.vue";
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, ref} from "vue";
 import draggable from "vuedraggable";
 
 import CreateCardController from "../../../actions/App/Http/Controllers/Projects/Cards/CreateCardController.js";
-import EditProjectController from "../../../actions/App/Http/Controllers/Projects/EditProjectController.js";
-import ListByProjectController from "../../../actions/App/Http/Controllers/Projects/Cards/ListByProjectController.js";
 import UpdateCardController from "../../../actions/App/Http/Controllers/Projects/Cards/UpdateCardController.js";
 import DeleteCardController from "../../../actions/App/Http/Controllers/Projects/Cards/DeleteCardController.js";
 import {useDialogConfirm} from "../../../composables/useDialogConfirm.js";
@@ -48,6 +46,7 @@ const toggle = (event) => {
 const form = useForm({
     id: null,
     title: '',
+    color: '',
     description: '',
 })
 
@@ -82,9 +81,9 @@ const dragOptions = {
 const selectedCard = ref(null);
 
 const handleEditCard = (event, card) => {
-    console.log(card)
     selectedCard.value = card;
     form.title = card.title;
+    form.color = card.color;
     form.description = card.description;
 
     toggle(event)
@@ -93,6 +92,14 @@ const handleEditCard = (event, card) => {
 onMounted(() => {
     mountCardItems();
 })
+
+function hexToRgba(hex, alpha = 1) {
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+    console.log(`rgba(${r}, ${g}, ${b}, ${alpha})`);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
 </script>
 
 <template>
@@ -106,9 +113,9 @@ onMounted(() => {
 
         <div class="card flex justify-center">
             <Popover ref="op">
-                <Form method="post" @success="handleSuccess" :action="selectedCard.id ? UpdateCardController({
-                project: project.id,
-                card: selectedCard.id,
+                <Form method="post" @success="handleSuccess" :action="selectedCard?.id ? UpdateCardController({
+                project: project?.id,
+                card: selectedCard?.id,
                 }) : CreateCardController(project.id)" #default="{ errors, resetAndClearErrors }" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                         <label class="flex flex-col">
@@ -125,6 +132,14 @@ onMounted(() => {
                                 <Textarea v-model="form.description" name="description" rows="5" placeholder="Digite sua descrição" cols="30" class="w-full bg-transparent !border-0 focus:ring-0 focus:outline-none "/>
                             </div>
                             <Message v-if="errors.description" severity="error" size="small" variant="simple">{{ errors.description }}</Message>
+                        </label>
+                        <label class="flex flex-col">
+                            <span class="text-sm font-medium text-gray-700 mb-2">Cor</span>
+                            <div class="flex items-center gap-3 bg-gray-50 rounded-lg px-3  border p-1 border-gray-200 focus-within:ring-2 focus-within:ring-emerald-200">
+                                <ColorPicker v-model="form.color" name="color" class="w-full" inputId="card-color"  />
+                                <input type="hidden" name="color" :value="form.color" />
+                            </div>
+                            <Message v-if="errors.color" severity="error" size="small" variant="simple">{{ errors.color }}</Message>
                         </label>
                     </div>
                     <div class="flex items-center justify-end gap-3">
@@ -146,14 +161,15 @@ onMounted(() => {
         </div>
 
         <div class="grid grid-cols-3 gap-4 mt-6">
-            <Card style="overflow: hidden" class="bg-gray-50"  v-for="card in props.cards" :key="card.id" >
+            <Card :style="{ backgroundColor: hexToRgba(`${card.color}`, 0.3) }" v-for="card in props.cards" :key="card.id" >
                 <template #title>
                     <div class="flex justify-between items-center">
                         <p class="m-0 font-bold">
                             {{card.title}}
                         </p>
                         <div class="flex mt-1">
-                            <Button type="button" class="p-0" icon="pi pi-pencil" text  @click="(event) => handleEditCard(event, card)"/>
+                            <Button type="button" class="p-0" icon="pi pi-plus" text  @click="(event) => handleEditCard(event, card)"/>
+                            <Button type="button" severity="warn" class="p-0" icon="pi pi-pencil" text  @click="(event) => handleEditCard(event, card)"/>
                             <Button type="button" @click="handleDeleteRecord(card.id)"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
                         </div>
                     </div>
@@ -180,11 +196,12 @@ onMounted(() => {
                         v-bind="dragOptions"
                         @start="drag = true"
                         @end="drag = false"
-                        class="space-y-2"
+                        class="space-y-2 p-0"
+
                         group="cards"
                     >
                         <template #item="{ element, index }">
-                            <div class="shadow p-3 rounded m-2 bg-white transition-all duration-300 ease-in-out hover:scale-105">{{ element.name }} {{ index }}</div>
+                            <div  class="shadow p-3 rounded mt-3  transition-all duration-300 ease-in-out hover:scale-105"  :style="{ backgroundColor: `#${card.color}`}">{{ element.name }} {{ index }}</div>
                         </template>
                     </draggable>
                 </template>

@@ -3,9 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use App\DTOs\ProjectCardData;
-use App\DTOs\ProjectData;
 use App\Repositories\Eloquent\Models\ProjectCard;
-use Illuminate\Pagination\AbstractPaginator;
 
 class ProjectCardRepository
 {

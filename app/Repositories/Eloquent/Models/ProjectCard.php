@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectCard extends Model
 {
     protected $table = 'projects_cards';
-    protected $fillable = ['project_id', 'title', 'description'];
+    protected $fillable = ['project_id', 'title', 'color', 'description'];
 }
