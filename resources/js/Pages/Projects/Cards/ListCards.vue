@@ -9,8 +9,10 @@ import CreateCardController from "../../../actions/App/Http/Controllers/Projects
 import UpdateCardController from "../../../actions/App/Http/Controllers/Projects/Cards/UpdateCardController.js";
 import DeleteCardController from "../../../actions/App/Http/Controllers/Projects/Cards/DeleteCardController.js";
 import {useDialogConfirm} from "../../../composables/useDialogConfirm.js";
+import CreateCardItemController
+    from "../../../actions/App/Http/Controllers/Projects/Cards/Items/CreateCardItemController.js";
 
-const props = defineProps(['cards', 'project'])
+const props = defineProps(['cards', 'project', 'priorities'])
 
 const dialogConfirm = useDialogConfirm(
     'Confirmação',
@@ -50,10 +52,11 @@ const form = useForm({
     description: '',
 })
 
-const handleSuccess = () => {
+const handleSuccess = (event) => {
     form.reset();
+    formItem.reset();
+    toggle()
     mountCardItems();
-    toggle();
 }
 
 let cards_items = ref({})
@@ -61,11 +64,8 @@ let cards_items = ref({})
 const mountCardItems = () => {
     const cards = {};
     props.cards.forEach(card => {
-        cards[`card-${card.id}`] = [
-            {name: "Juan", id: 5},
-            {name: "Edgard", id: 6},
-            {name: "Johnson", id: 7}
-        ]
+        cards[`card-${card.id}`] = card.items.length > 0 ?
+            card.items.map((item, index) => ({name: item.title,  id: item.id})) : []
     })
     cards_items.value = cards;
 }
@@ -99,6 +99,31 @@ function hexToRgba(hex, alpha = 1) {
     const b = parseInt(hex.slice(4, 6), 16);
     console.log(`rgba(${r}, ${g}, ${b}, ${alpha})`);
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+
+//card items
+const formItem = useForm({
+    id: null,
+    card_id: null,
+    title: '',
+    description: '',
+    priority: '',
+})
+
+const opItem = ref();
+
+const toggleItem = (event, card_id = null) => {
+    formItem.card_id = card_id;
+    opItem.value.toggle(event);
+}
+
+
+const handleItemSuccess = (event) => {
+    form.reset();
+    formItem.reset();
+    toggleItem()
+    mountCardItems();
 }
 </script>
 
@@ -160,6 +185,64 @@ function hexToRgba(hex, alpha = 1) {
             </Popover>
         </div>
 
+        <div class="card flex justify-center">
+            <Popover ref="opItem">
+                <Form method="post" :action="CreateCardItemController({
+                project: project?.id,
+                card: formItem?.card_id,
+                })"  #default="{ errors, resetAndClearErrors }" class="space-y-6" @success="handleItemSuccess">
+                    <input type="hidden" name="card_id" :value="formItem?.card_id" />
+                    <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                        <label class="flex flex-col">
+                            <span class="text-sm font-medium text-gray-700 mb-2">Nome</span>
+                            <div class="flex items-center gap-3 bg-gray-50 rounded-lg px-3  border border-gray-200 focus-within:ring-2 focus-within:ring-emerald-200">
+                                <InputText name="title" v-model="formItem.title" placeholder="Digite o nome do item" class="w-full bg-transparent border-0 focus:ring-0"/>
+                            </div>
+                            <Message v-if="errors.title" severity="error" size="small" variant="simple">{{ errors.title }}</Message>
+                        </label>
+
+                        <label class="flex flex-col">
+                            <span class="text-sm font-medium text-gray-700 mb-2">Descrição</span>
+                            <div class="flex items-center gap-3 bg-gray-50 rounded-lg px-3  border p-1 border-gray-200 focus-within:ring-2 focus-within:ring-emerald-200">
+                                <Textarea v-model="formItem.description" name="description" rows="5" placeholder="Digite sua descrição" cols="30" class="w-full bg-transparent !border-0 focus:ring-0 focus:outline-none "/>
+                            </div>
+                            <Message v-if="errors.description" severity="error" size="small" variant="simple">{{ errors.description }}</Message>
+                        </label>
+                        <label class="flex flex-col">
+                            <span class="text-sm font-medium text-gray-700 mb-2">Prioridade</span>
+                            <div class="flex items-center gap-3 bg-gray-50 rounded-lg px-3  border p-1 border-gray-200 focus-within:ring-2 focus-within:ring-emerald-200">
+                                <Select
+                                    v-model="formItem.priority"
+                                    name="priority"
+                                    :options="priorities"
+                                    optionLabel="name"
+                                    optionValue="code"
+                                    placeholder="Selecione a prioridade"
+                                    class="w-full bg-transparent border-0"
+                                />
+                                <input type="hidden" name="priority" :value="formItem.priority" />
+                            </div>
+                            <Message v-if="errors.priority" severity="error" size="small" variant="simple">{{ errors.priority }}</Message>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-end gap-3">
+                        <Button @click="toggle" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-sm text-gray-700">
+                            <i class="pi pi-times"></i>
+                            Cancelar
+                        </Button>
+
+                        <Button
+                            type="submit"
+                            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white shadow-md transform hover:-translate-y-0.5 transition"
+                            style="background: linear-gradient(90deg,#10b981,#06b6d4);"
+                            icon="pi pi-check"
+                            label="Salvar"
+                        />
+                    </div>
+                </Form>
+            </Popover>
+        </div>
+
         <div class="grid grid-cols-3 gap-4 mt-6">
             <Card :style="{ backgroundColor: hexToRgba(`${card.color}`, 0.3) }" v-for="card in props.cards" :key="card.id" >
                 <template #title>
@@ -168,7 +251,7 @@ function hexToRgba(hex, alpha = 1) {
                             {{card.title}}
                         </p>
                         <div class="flex mt-1">
-                            <Button type="button" class="p-0" icon="pi pi-plus" text  @click="(event) => handleEditCard(event, card)"/>
+                            <Button type="button" class="p-0" icon="pi pi-plus" text  @click=" (event) => toggleItem(event, card.id)"/>
                             <Button type="button" severity="warn" class="p-0" icon="pi pi-pencil" text  @click="(event) => handleEditCard(event, card)"/>
                             <Button type="button" @click="handleDeleteRecord(card.id)"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
                         </div>
@@ -201,7 +284,7 @@ function hexToRgba(hex, alpha = 1) {
                         group="cards"
                     >
                         <template #item="{ element, index }">
-                            <div  class="shadow p-3 rounded mt-3  transition-all duration-300 ease-in-out hover:scale-105"  :style="{ backgroundColor: `#${card.color}`}">{{ element.name }} {{ index }}</div>
+                            <div  class="shadow p-3 rounded mt-3  transition-all duration-300 ease-in-out hover:scale-105"  :style="{ backgroundColor: `#${card.color}`}">{{ element.name }}</div>
                         </template>
                     </draggable>
                 </template>

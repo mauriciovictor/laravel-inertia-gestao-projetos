@@ -68,7 +68,7 @@ const handlePage = (event) => {
                             <Button type="button" icon="pi pi-pencil" text />
                         </Link>
                         <Button type="button" @click="handleDeleteRecord(project.id)"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
-                        <Link :href="ListByProjectController(project.id)" class="w-full">
+                        <Link :href="ListByProjectController(project?.id)" class="w-full">
                             <Button label="Ver mais" variant="outlined"  icon="pi pi-arrow-right" severity="warn"  class="w-full" />
                         </Link>
                     </div>

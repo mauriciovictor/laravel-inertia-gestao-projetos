@@ -2,21 +2,21 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\DTOs\ProjectCardData;
-use App\Repositories\Eloquent\Models\ProjectCard;
+use App\DTOs\ProjectCardItemData;
+use App\Repositories\Eloquent\Models\ProjectCardItem;
 
-class ProjectCardRepository
+class ProjectCardItemRepository
 {
-    public function __construct(private ProjectCard $model)
+    public function __construct(private ProjectCardItem $model)
     {
     }
 
-    public function create(ProjectCardData $data)
+    public function create(ProjectCardItemData $data)
     {
         return $this->model->create($data->toArray());
     }
 
-    public function update(int $id, ProjectCardData $data)
+    public function update(int $id, ProjectCardItemData $data)
     {
         $this->model->find($id)->update($data->toArray());
 
@@ -28,9 +28,9 @@ class ProjectCardRepository
         return $this->model->find($id);
     }
 
-    public function findAllByProject(string $id)
+    public function findByCardId(string $card_id)
     {
-        return $this->model->with('items')->get();
+        return $this->model->where('card_id', $card_id)->get();
     }
 
     public function delete(int $id)

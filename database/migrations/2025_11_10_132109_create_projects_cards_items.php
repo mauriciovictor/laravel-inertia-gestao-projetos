@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('projects_cards_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('projects_cards_id')->constrained('projects_cards')->cascadeOnDelete();
+            $table->foreignId('project_card_id')->constrained('projects_cards')->cascadeOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('status')->default('active');

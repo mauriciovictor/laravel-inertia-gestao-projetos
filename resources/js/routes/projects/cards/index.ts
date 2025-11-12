@@ -1,4 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import items from './items'
 /**
 * @see \App\Http\Controllers\Projects\Cards\ListByProjectController::__invoke
 * @see app/Http/Controllers/Projects/Cards/ListByProjectController.php:16
@@ -220,6 +221,7 @@ const cards = {
     store: Object.assign(store, store),
     update: Object.assign(update, update),
     destroy: Object.assign(destroy, destroy),
+    items: Object.assign(items, items),
 }
 
 export default cards
