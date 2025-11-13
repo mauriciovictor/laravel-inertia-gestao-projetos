@@ -23,6 +23,20 @@ class ProjectCardItemRepository
         return $this->model->find($id);
     }
 
+    public function updateProjectCardId(int $card_id, int $item_id)
+    {
+        $this->model->find($item_id)->update([
+            'project_card_id' => $card_id,
+        ]);
+    }
+
+    public function updateItemPriority(int $item_id, string $priority)
+    {
+        $this->model->find($item_id)->update([
+            'priority' => $priority,
+        ]);
+    }
+
     public function findById(int $id)
     {
         return $this->model->find($id);

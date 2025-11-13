@@ -20,9 +20,9 @@ enum CardItemPriorityEnum: string
     public function getColor(): string
     {
         return match ($this) {
-            self::LOW => 'bg-gray-200',
-            self::MEDIUM => 'bg-yellow-200',
-            self::HIGH => 'bg-red-200',
+            self::LOW => 'bg-white/60 text-cyan-600',
+            self::MEDIUM => 'bg-white/60 text-orange-900 font-bold',
+            self::HIGH => 'bg-white/60 text-red-600',
         };
     }
 

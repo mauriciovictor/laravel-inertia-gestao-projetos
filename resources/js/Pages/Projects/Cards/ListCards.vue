@@ -2,7 +2,7 @@
 import AppLayout     from "../../../Layouts/AppLayout.vue";
 import {router, useForm, Form, Link} from "@inertiajs/vue3";
 import ActionCan from "../../../Components/ActionCan.vue";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, nextTick} from "vue";
 import draggable from "vuedraggable";
 
 import CreateCardController from "../../../actions/App/Http/Controllers/Projects/Cards/CreateCardController.js";
@@ -11,9 +11,13 @@ import DeleteCardController from "../../../actions/App/Http/Controllers/Projects
 import {useDialogConfirm} from "../../../composables/useDialogConfirm.js";
 import CreateCardItemController
     from "../../../actions/App/Http/Controllers/Projects/Cards/Items/CreateCardItemController.js";
+import {useToast} from "primevue";
+import ChangeItemPriorityController
+    from "../../../actions/App/Http/Controllers/Projects/Cards/Items/ChangeItemPriorityController.js";
+import DeleteCardItemController
+    from "../../../actions/App/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.js";
 
 const props = defineProps(['cards', 'project', 'priorities'])
-
 const dialogConfirm = useDialogConfirm(
     'Confirmação',
     'Deseja o card selecionado?',
@@ -65,7 +69,7 @@ const mountCardItems = () => {
     const cards = {};
     props.cards.forEach(card => {
         cards[`card-${card.id}`] = card.items.length > 0 ?
-            card.items.map((item, index) => ({name: item.title,  id: item.id})) : []
+            card.items.map((item, index) => ({name: item.title, description: item.description, priority: item.priority,   id: item.id})) : []
     })
     cards_items.value = cards;
 }
@@ -97,7 +101,6 @@ function hexToRgba(hex, alpha = 1) {
     const r = parseInt(hex.slice(0, 2), 16);
     const g = parseInt(hex.slice(2, 4), 16);
     const b = parseInt(hex.slice(4, 6), 16);
-    console.log(`rgba(${r}, ${g}, ${b}, ${alpha})`);
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
@@ -113,8 +116,9 @@ const formItem = useForm({
 
 const opItem = ref();
 
-const toggleItem = (event, card_id = null) => {
+const toggleItem = async (event, card_id = null) => {
     formItem.card_id = card_id;
+    await nextTick();
     opItem.value.toggle(event);
 }
 
@@ -124,6 +128,107 @@ const handleItemSuccess = (event) => {
     formItem.reset();
     toggleItem()
     mountCardItems();
+}
+const toast = useToast();
+const selectedItem = ref(null);
+const menu = ref(null);
+
+const priorityOptions = props.priorities.map(priority => ({label: priority.name, code: priority.code, icon: priority.icon, command: (event) => {
+        const url = ChangeItemPriorityController({
+            card: selectedRow.value,
+            project: props.project.id,
+        });
+        router.put(url, {
+            item_id: selectedItem.value,
+            priority:event.item.code
+        }, {
+            onSuccess: () => mountCardItems()
+        })
+    }}));
+const selecteItemData = ref(null);
+const onRightClick = (event, card, user) => {
+    selectedRow.value = card.id;
+    selectedItem.value = user.id;
+    selecteItemData.value = user;
+
+    menu.value.show(event);
+};
+
+const items = ref([
+    {
+        label: 'Prioridade',
+        icon: 'pi pi-clock',
+        items: [...priorityOptions]
+    },
+    {
+        label: 'Editar',
+        icon: 'pi pi-pencil',
+        command: (e) => {
+            const ev = e?.originalEvent ?? e;
+            if (menu && menu.value && typeof menu.value.hide === 'function') {
+                menu.value.hide();
+            }
+
+            formItem.title = selecteItemData.value.name;
+            formItem.description = selecteItemData.value.description;
+            formItem.priority = selecteItemData.value.priority;
+            formItem.id = selecteItemData.value.id;
+            
+            toggleItem(ev, selectedRow.value)
+        }
+    },
+    {
+        label: 'Excluir',
+        icon: 'pi pi-trash',
+        command: () => handleDeleteCardItem()
+    }
+]);
+
+const onAdd = (event) => {
+    const new_card_id = event.to.id.replace('card-item-', '');
+    const old_card_id = event.from.id.replace('card-item-', '');
+    const item_id = event.item.id.replace('item-', '');
+    const url = ChangeCardItemController({
+        card: old_card_id,
+        project: props.project.id,
+    });
+    router.put(url, {
+        item_id,
+        project_card_id: new_card_id
+    })
+};
+
+const getPriority = (element) => props.priorities.find(p => p.code === element.priority)
+
+const confirmDelete = () => {
+    router.delete(DeleteCardItemController({
+        project: props.project.id,
+        card: selectedRow.value,
+        item: selectedItem.value,
+    }), {
+        preserveState: true,
+        replace: true,
+        preserveScroll: true,
+        onSuccess: () => {
+            mountCardItems()
+        }
+    })
+}
+
+const dialogDeleteConfirmItem = useDialogConfirm(
+    'Confirmação',
+    'Deseja delete o item selecionado?',
+    'pi pi-info-circle',
+    'Delete',
+    'Cancel',
+    'pi pi-check',
+    'pi pi-times',
+    confirmDelete,
+    () => {}
+)
+
+const handleDeleteCardItem = () => {
+    dialogDeleteConfirmItem.showDialog();
 }
 </script>
 
@@ -244,7 +349,7 @@ const handleItemSuccess = (event) => {
         </div>
 
         <div class="grid grid-cols-3 gap-4 mt-6">
-            <Card :style="{ backgroundColor: hexToRgba(`${card.color}`, 0.3) }" v-for="card in props.cards" :key="card.id" >
+            <Card  :style="{ backgroundColor: hexToRgba(`${card.color}`, 0.3) }" v-for="card in props.cards" :key="card.id" >
                 <template #title>
                     <div class="flex justify-between items-center">
                         <p class="m-0 font-bold">
@@ -269,6 +374,7 @@ const handleItemSuccess = (event) => {
                     </p>
 
                     <draggable
+                        :id="'card-item-' + card.id"
                         v-model="cards_items[`card-${card.id}`]"
                         item-key="order"
                         :component-data="{
@@ -280,11 +386,19 @@ const handleItemSuccess = (event) => {
                         @start="drag = true"
                         @end="drag = false"
                         class="space-y-2 p-0"
-
+                        @add="onAdd"
                         group="cards"
                     >
                         <template #item="{ element, index }">
-                            <div  class="shadow p-3 rounded mt-3  transition-all duration-300 ease-in-out hover:scale-105"  :style="{ backgroundColor: `#${card.color}`}">{{ element.name }}</div>
+                            <div @contextmenu="onRightClick($event, card, element)" :id="'item-'+element.id"  class="shadow p-3 flex justify-between rounded mt-3  transition-all duration-300 ease-in-out hover:scale-105"  :style="{ backgroundColor: `#${card.color}`}">
+                                <strong>
+                                    {{ element.name }}
+                                </strong>
+                                <div :class="'p-1 px-3 items-center rounded flex gap-2 text-sm ' + getPriority(element).color " >
+                                    <i  :class=" 'text-[10px] '+ getPriority(element).icon"></i>
+                                    {{ getPriority(element).name }}
+                                </div>
+                            </div>
                         </template>
                     </draggable>
                 </template>
@@ -294,6 +408,7 @@ const handleItemSuccess = (event) => {
                     </div>
                 </template>
             </Card>
+            <ContextMenu ref="menu" :model="items" @hide="selectedUser = null" />
         </div>
     </AppLayout>
 </template>
