@@ -6,7 +6,6 @@ import EditProjectController from "../../actions/App/Http/Controllers/Projects/E
 import {useDialogConfirm} from "../../composables/useDialogConfirm.js";
 import {ref} from "vue";
 import DeleteProjectController from "../../actions/App/Http/Controllers/Projects/DeleteProjectController.js";
-import {route} from "ziggy-js";
 import ListByProjectController from "../../actions/App/Http/Controllers/Projects/Cards/ListByProjectController.js";
 
 const props = defineProps(['projects'])
@@ -48,7 +47,7 @@ const handlePage = (event) => {
     <AppLayout>
         <div class="flex items-center justify-between">
             <h3 class="text-3xl text-neutral-900 font-medium mb-8">Projetos </h3>
-            <ActionCan feature="users" action="create" >
+            <ActionCan feature="projects" action="create" >
                 <Button label="Novo Projeto" severity="success" icon="pi pi-plus" class="p-button-outlined" @click="router.get('/projects/create')"/>
             </ActionCan>
         </div>
@@ -64,13 +63,21 @@ const handlePage = (event) => {
                 </template>
                 <template #footer>
                     <div class="flex  gap-2 mt-1">
-                        <Link :href="EditProjectController(project.id)">
-                            <Button type="button" icon="pi pi-pencil" text />
-                        </Link>
-                        <Button type="button" @click="handleDeleteRecord(project.id)"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
-                        <Link :href="ListByProjectController(project?.id)" class="w-full">
-                            <Button label="Ver mais" variant="outlined"  icon="pi pi-arrow-right" severity="warn"  class="w-full" />
-                        </Link>
+                        <ActionCan feature="projects" action="edit" >
+                            <Link :href="EditProjectController(project.id)">
+                                <Button type="button" icon="pi pi-pencil" text />
+                            </Link>
+                        </ActionCan>
+
+                        <ActionCan feature="projects" action="delete" >
+                            <Button type="button" @click="handleDeleteRecord(project.id)"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
+                        </ActionCan>
+
+                        <ActionCan feature="project_cards" action="view" >
+                            <Link :href="ListByProjectController(project?.id)" class="w-full">
+                                <Button label="Ver mais" variant="outlined"  icon="pi pi-arrow-right" severity="warn"  class="w-full" />
+                            </Link>
+                        </ActionCan>
                     </div>
                 </template>
             </Card>

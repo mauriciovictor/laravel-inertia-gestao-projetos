@@ -68,7 +68,7 @@ watch(
     <AppLayout>
         <div class="flex flex-col items-start justify-between">
             <h3 class="text-3xl text-neutral-900 font-medium mb-8">Listagem de cards do projeto: {{props.project.title}} </h3>
-            <ActionCan feature="users" action="create" >
+            <ActionCan feature="project_cards" action="create" >
                 <Button type="button" label="Novo Card" severity="success" icon="pi pi-plus" class="p-button-outlined" @click="togglePopoverFormCard" />
             </ActionCan>
         </div>
@@ -185,9 +185,17 @@ watch(
                             {{card.title}}
                         </p>
                         <div class="flex mt-1">
-                            <Button type="button" class="p-0" icon="pi pi-plus" text  @click=" (event) => togglePopoverProjectCardItem(event, card)"/>
-                            <Button type="button" severity="warn" class="p-0" icon="pi pi-pencil" text  @click="(event) => handleEditCard(event, card)"/>
-                            <Button type="button" @click="handleDeleteCard(card.id)"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
+                            <ActionCan feature="project_card_items" action="create" >
+                                <Button type="button" class="p-0" icon="pi pi-plus" text  @click=" (event) => togglePopoverProjectCardItem(event, card)"/>
+                            </ActionCan>
+
+                            <ActionCan feature="project_cards" action="edit" >
+                                <Button type="button" severity="warn" class="p-0" icon="pi pi-pencil" text  @click="(event) => handleEditCard(event, card)"/>
+                            </ActionCan>
+
+                            <ActionCan feature="project_cards" action="delete" >
+                                <Button type="button" @click="handleDeleteCard(card.id)"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
+                            </ActionCan>
                         </div>
                     </div>
 
@@ -201,35 +209,37 @@ watch(
                     <p class="m-0 text-sm">
                         {{card.description}}
                     </p>
-
-                    <draggable
-                        :id="'card-item-' + card.id"
-                        v-model="cardItems[`card-${card.id}`]"
-                        item-key="order"
-                        :component-data="{
+                    <ActionCan feature="project_card_items" action="view" >
+                        <draggable
+                            :id="'card-item-' + card.id"
+                            v-model="cardItems[`card-${card.id}`]"
+                            item-key="order"
+                            :component-data="{
                         tag: 'ul',
                         type: 'transition-group',
                         name: !drag ? 'flip-list' : null
                       }"
-                        v-bind="dragOptions"
-                        @start="drag = true"
-                        @end="drag = false"
-                        class="space-y-2 p-0"
-                        @add="onAdd"
-                        group="cards"
-                    >
-                        <template #item="{ element, index }">
-                            <div @contextmenu="onRightClick($event, card, element)" :id="'item-'+element.id"  class="shadow p-3 flex justify-between rounded mt-3  transition-all duration-300 ease-in-out hover:scale-105"  :style="{ backgroundColor: `#${card.color}`}">
-                                <strong>
-                                    {{ element.name }}
-                                </strong>
-                                <div :class="'p-1 px-3 items-center rounded flex gap-2 text-sm ' + getPriority(element).color " >
-                                    <i  :class=" 'text-[10px] '+ getPriority(element).icon"></i>
-                                    {{ getPriority(element).name }}
+                            v-bind="dragOptions"
+                            @start="drag = true"
+                            @end="drag = false"
+                            class="space-y-2 p-0"
+                            @add="onAdd"
+                            group="cards"
+                        >
+                            <template #item="{ element, index }">
+                                <div @contextmenu="onRightClick($event, card, element)" :id="'item-'+element.id"  class="shadow p-3 flex justify-between rounded mt-3  transition-all duration-300 ease-in-out hover:scale-105"  :style="{ backgroundColor: `#${card.color}`}">
+                                    <strong>
+                                        {{ element.name }}
+                                    </strong>
+                                    <div :class="'p-1 px-3 items-center rounded flex gap-2 text-sm ' + getPriority(element).color " >
+                                        <i  :class=" 'text-[10px] '+ getPriority(element).icon"></i>
+                                        {{ getPriority(element).name }}
+                                    </div>
                                 </div>
-                            </div>
-                        </template>
-                    </draggable>
+                            </template>
+                        </draggable>
+                    </ActionCan>
+
                 </template>
                 <template #footer>
                     <div class="flex  gap-2 mt-1">
