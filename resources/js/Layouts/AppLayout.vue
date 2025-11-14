@@ -39,7 +39,7 @@ const items = ref([
                 label: 'projetos',
                 icon: 'pi pi-cog',
                 shortcut: 'CRTL+O',
-                can: 'perfis',
+                can: 'projects',
                 action: () =>  ListProjectsController()
             },
         ]

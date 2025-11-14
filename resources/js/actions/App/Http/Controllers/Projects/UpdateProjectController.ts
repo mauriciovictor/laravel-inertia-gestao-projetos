@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\UpdateProjectController::__invoke
-* @see app/Http/Controllers/Projects/UpdateProjectController.php:14
+* @see app/Http/Controllers/Projects/UpdateProjectController.php:15
 * @route '/projects/{project}'
 */
 const UpdateProjectController = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -16,7 +16,7 @@ UpdateProjectController.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\UpdateProjectController::__invoke
-* @see app/Http/Controllers/Projects/UpdateProjectController.php:14
+* @see app/Http/Controllers/Projects/UpdateProjectController.php:15
 * @route '/projects/{project}'
 */
 UpdateProjectController.url = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ UpdateProjectController.url = (args: { project: string | number } | [project: st
 
 /**
 * @see \App\Http\Controllers\Projects\UpdateProjectController::__invoke
-* @see app/Http/Controllers/Projects/UpdateProjectController.php:14
+* @see app/Http/Controllers/Projects/UpdateProjectController.php:15
 * @route '/projects/{project}'
 */
 UpdateProjectController.put = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({

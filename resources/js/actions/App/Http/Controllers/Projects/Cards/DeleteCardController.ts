@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\Cards\DeleteCardController::__invoke
-* @see app/Http/Controllers/Projects/Cards/DeleteCardController.php:19
+* @see app/Http/Controllers/Projects/Cards/DeleteCardController.php:20
 * @route '/projects/{project}/cards/{card}'
 */
 const DeleteCardController = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -16,7 +16,7 @@ DeleteCardController.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\DeleteCardController::__invoke
-* @see app/Http/Controllers/Projects/Cards/DeleteCardController.php:19
+* @see app/Http/Controllers/Projects/Cards/DeleteCardController.php:20
 * @route '/projects/{project}/cards/{card}'
 */
 DeleteCardController.url = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions) => {
@@ -42,7 +42,7 @@ DeleteCardController.url = (args: { project: string | number, card: string | num
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\DeleteCardController::__invoke
-* @see app/Http/Controllers/Projects/Cards/DeleteCardController.php:19
+* @see app/Http/Controllers/Projects/Cards/DeleteCardController.php:20
 * @route '/projects/{project}/cards/{card}'
 */
 DeleteCardController.delete = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({

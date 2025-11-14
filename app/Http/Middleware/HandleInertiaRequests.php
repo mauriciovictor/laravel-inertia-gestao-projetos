@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Enums\PermissionsEnum;
-use App\Repositories\Eloquent\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -38,13 +37,14 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $shared = [];
-        
+
         if (Auth()->check()) {
             $shared['auth.user'] = [
                 'permissions' => [
                     'menus' => [
                         'users' => $request->user()->hasPermissionTo(PermissionsEnum::USER_VIEW->value),
                         'perfis' => $request->user()->hasPermissionTo(PermissionsEnum::ROLES_VIEW->value),
+                        'projects' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_VIEW->value),
                     ],
                     'features' => [
                         'users' => [
@@ -56,6 +56,23 @@ class HandleInertiaRequests extends Middleware
                             'create' => $request->user()->hasPermissionTo(PermissionsEnum::ROLES_CREATE->value),
                             'edit' => $request->user()->hasPermissionTo(PermissionsEnum::ROLES_EDIT->value),
                             'delete' => $request->user()->hasPermissionTo(PermissionsEnum::ROLES_DELETE->value),
+                        ],
+                        'projects' => [
+                            'create' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_CREATE->value),
+                            'edit' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_EDIT->value),
+                            'delete' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_DELETE->value),
+                        ],
+                        'project_cards' => [
+                            'view' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_CARD_VIEW->value),
+                            'create' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_CARD_CREATE->value),
+                            'edit' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_CARD_EDIT->value),
+                            'delete' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_CARD_DELETE->value),
+                        ],
+                        'project_card_items' => [
+                            'view' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_CARD_ITEM_VIEW->value),
+                            'create' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_CARD_ITEM_CREATE->value),
+                            'edit' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_CARD_ITEM_EDIT->value),
+                            'delete' => $request->user()->hasPermissionTo(PermissionsEnum::PROJECT_CARD_ITEM_DELETE->value),
                         ]
                     ]
                 ]

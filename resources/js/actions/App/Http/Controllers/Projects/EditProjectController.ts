@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\EditProjectController::__invoke
-* @see app/Http/Controllers/Projects/EditProjectController.php:15
+* @see app/Http/Controllers/Projects/EditProjectController.php:16
 * @route '/projects/{project}'
 */
 const EditProjectController = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ EditProjectController.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\EditProjectController::__invoke
-* @see app/Http/Controllers/Projects/EditProjectController.php:15
+* @see app/Http/Controllers/Projects/EditProjectController.php:16
 * @route '/projects/{project}'
 */
 EditProjectController.url = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ EditProjectController.url = (args: { project: string | number } | [project: stri
 
 /**
 * @see \App\Http\Controllers\Projects\EditProjectController::__invoke
-* @see app/Http/Controllers/Projects/EditProjectController.php:15
+* @see app/Http/Controllers/Projects/EditProjectController.php:16
 * @route '/projects/{project}'
 */
 EditProjectController.get = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -53,7 +53,7 @@ EditProjectController.get = (args: { project: string | number } | [project: stri
 
 /**
 * @see \App\Http\Controllers\Projects\EditProjectController::__invoke
-* @see app/Http/Controllers/Projects/EditProjectController.php:15
+* @see app/Http/Controllers/Projects/EditProjectController.php:16
 * @route '/projects/{project}'
 */
 EditProjectController.head = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\Cards\ListByProjectController::__invoke
-* @see app/Http/Controllers/Projects/Cards/ListByProjectController.php:16
+* @see app/Http/Controllers/Projects/Cards/ListByProjectController.php:17
 * @route '/projects/{project}/cards'
 */
 const ListByProjectController = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ ListByProjectController.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\ListByProjectController::__invoke
-* @see app/Http/Controllers/Projects/Cards/ListByProjectController.php:16
+* @see app/Http/Controllers/Projects/Cards/ListByProjectController.php:17
 * @route '/projects/{project}/cards'
 */
 ListByProjectController.url = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ ListByProjectController.url = (args: { project: string | number } | [project: st
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\ListByProjectController::__invoke
-* @see app/Http/Controllers/Projects/Cards/ListByProjectController.php:16
+* @see app/Http/Controllers/Projects/Cards/ListByProjectController.php:17
 * @route '/projects/{project}/cards'
 */
 ListByProjectController.get = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -53,7 +53,7 @@ ListByProjectController.get = (args: { project: string | number } | [project: st
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\ListByProjectController::__invoke
-* @see app/Http/Controllers/Projects/Cards/ListByProjectController.php:16
+* @see app/Http/Controllers/Projects/Cards/ListByProjectController.php:17
 * @route '/projects/{project}/cards'
 */
 ListByProjectController.head = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({

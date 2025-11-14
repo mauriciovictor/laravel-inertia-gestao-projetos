@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Projects;
 
 use App\Enums\ProjectStatusEnum;
 use App\UseCases\Projects\FindProjectUseCase;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class EditProjectController
@@ -14,6 +15,10 @@ class EditProjectController
 
     public function __invoke(string $id)
     {
+        if (!Gate::allows('project-edit')) {
+            throw new \Exception('Sem autorização para acessar este recurso.');
+        }
+
         $status = [];
 
         foreach (ProjectStatusEnum::cases() as $s) {

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\ChangeCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/ChangeCardItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/ChangeCardItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/move'
 */
 export const item = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -16,7 +16,7 @@ item.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\ChangeCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/ChangeCardItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/ChangeCardItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/move'
 */
 item.url = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions) => {
@@ -42,7 +42,7 @@ item.url = (args: { project: string | number, card: string | number } | [project
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\ChangeCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/ChangeCardItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/ChangeCardItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/move'
 */
 item.put = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({

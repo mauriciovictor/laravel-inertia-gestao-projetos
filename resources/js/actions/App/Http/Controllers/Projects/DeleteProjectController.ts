@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\DeleteProjectController::__invoke
-* @see app/Http/Controllers/Projects/DeleteProjectController.php:13
+* @see app/Http/Controllers/Projects/DeleteProjectController.php:14
 * @route '/projects/{project}'
 */
 const DeleteProjectController = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -16,7 +16,7 @@ DeleteProjectController.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\DeleteProjectController::__invoke
-* @see app/Http/Controllers/Projects/DeleteProjectController.php:13
+* @see app/Http/Controllers/Projects/DeleteProjectController.php:14
 * @route '/projects/{project}'
 */
 DeleteProjectController.url = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ DeleteProjectController.url = (args: { project: string | number } | [project: st
 
 /**
 * @see \App\Http\Controllers\Projects\DeleteProjectController::__invoke
-* @see app/Http/Controllers/Projects/DeleteProjectController.php:13
+* @see app/Http/Controllers/Projects/DeleteProjectController.php:14
 * @route '/projects/{project}'
 */
 DeleteProjectController.delete = (args: { project: string | number } | [project: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({

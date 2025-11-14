@@ -3,7 +3,7 @@ import change from './change'
 import move from './move'
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\CreateCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/CreateCardItemController.php:19
+* @see app/Http/Controllers/Projects/Cards/Items/CreateCardItemController.php:20
 * @route '/projects/{project}/cards/{card}/items'
 */
 export const store = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -18,7 +18,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\CreateCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/CreateCardItemController.php:19
+* @see app/Http/Controllers/Projects/Cards/Items/CreateCardItemController.php:20
 * @route '/projects/{project}/cards/{card}/items'
 */
 store.url = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions) => {
@@ -44,7 +44,7 @@ store.url = (args: { project: string | number, card: string | number } | [projec
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\CreateCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/CreateCardItemController.php:19
+* @see app/Http/Controllers/Projects/Cards/Items/CreateCardItemController.php:20
 * @route '/projects/{project}/cards/{card}/items'
 */
 store.post = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -54,7 +54,7 @@ store.post = (args: { project: string | number, card: string | number } | [proje
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\UpdateItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 export const update = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -69,7 +69,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\UpdateItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 update.url = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions) => {
@@ -98,7 +98,7 @@ update.url = (args: { project: string | number, card: string | number, item: str
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\UpdateItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 update.put = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -108,7 +108,7 @@ update.put = (args: { project: string | number, card: string | number, item: str
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\DeleteCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 export const destroy = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -123,7 +123,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\DeleteCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 destroy.url = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions) => {
@@ -152,7 +152,7 @@ destroy.url = (args: { project: string | number, card: string | number, item: st
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\DeleteCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 destroy.delete = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\ListProjectsController::__invoke
-* @see app/Http/Controllers/Projects/ListProjectsController.php:15
+* @see app/Http/Controllers/Projects/ListProjectsController.php:16
 * @route '/projects'
 */
 const ListProjectsController = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ ListProjectsController.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\ListProjectsController::__invoke
-* @see app/Http/Controllers/Projects/ListProjectsController.php:15
+* @see app/Http/Controllers/Projects/ListProjectsController.php:16
 * @route '/projects'
 */
 ListProjectsController.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ ListProjectsController.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Projects\ListProjectsController::__invoke
-* @see app/Http/Controllers/Projects/ListProjectsController.php:15
+* @see app/Http/Controllers/Projects/ListProjectsController.php:16
 * @route '/projects'
 */
 ListProjectsController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ ListProjectsController.get = (options?: RouteQueryOptions): RouteDefinition<'get
 
 /**
 * @see \App\Http\Controllers\Projects\ListProjectsController::__invoke
-* @see app/Http/Controllers/Projects/ListProjectsController.php:15
+* @see app/Http/Controllers/Projects/ListProjectsController.php:16
 * @route '/projects'
 */
 ListProjectsController.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({

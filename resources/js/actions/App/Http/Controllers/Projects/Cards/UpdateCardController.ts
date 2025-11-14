@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\Cards\UpdateCardController::__invoke
-* @see app/Http/Controllers/Projects/Cards/UpdateCardController.php:18
+* @see app/Http/Controllers/Projects/Cards/UpdateCardController.php:19
 * @route '/projects/{project}/cards/{card}'
 */
 const UpdateCardController = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -16,7 +16,7 @@ UpdateCardController.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\UpdateCardController::__invoke
-* @see app/Http/Controllers/Projects/Cards/UpdateCardController.php:18
+* @see app/Http/Controllers/Projects/Cards/UpdateCardController.php:19
 * @route '/projects/{project}/cards/{card}'
 */
 UpdateCardController.url = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions) => {
@@ -42,7 +42,7 @@ UpdateCardController.url = (args: { project: string | number, card: string | num
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\UpdateCardController::__invoke
-* @see app/Http/Controllers/Projects/Cards/UpdateCardController.php:18
+* @see app/Http/Controllers/Projects/Cards/UpdateCardController.php:19
 * @route '/projects/{project}/cards/{card}'
 */
 UpdateCardController.put = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({

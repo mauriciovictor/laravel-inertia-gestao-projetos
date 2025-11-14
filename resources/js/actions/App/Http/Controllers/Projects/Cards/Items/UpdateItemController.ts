@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\UpdateItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 const UpdateItemController = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -16,7 +16,7 @@ UpdateItemController.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\UpdateItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 UpdateItemController.url = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions) => {
@@ -45,7 +45,7 @@ UpdateItemController.url = (args: { project: string | number, card: string | num
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\UpdateItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 UpdateItemController.put = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({

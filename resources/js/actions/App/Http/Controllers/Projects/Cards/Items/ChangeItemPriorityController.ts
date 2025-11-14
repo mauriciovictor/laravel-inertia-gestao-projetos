@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\ChangeItemPriorityController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/ChangeItemPriorityController.php:17
+* @see app/Http/Controllers/Projects/Cards/Items/ChangeItemPriorityController.php:18
 * @route '/projects/{project}/cards/{card}/items/priority'
 */
 const ChangeItemPriorityController = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -16,7 +16,7 @@ ChangeItemPriorityController.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\ChangeItemPriorityController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/ChangeItemPriorityController.php:17
+* @see app/Http/Controllers/Projects/Cards/Items/ChangeItemPriorityController.php:18
 * @route '/projects/{project}/cards/{card}/items/priority'
 */
 ChangeItemPriorityController.url = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions) => {
@@ -42,7 +42,7 @@ ChangeItemPriorityController.url = (args: { project: string | number, card: stri
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\ChangeItemPriorityController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/ChangeItemPriorityController.php:17
+* @see app/Http/Controllers/Projects/Cards/Items/ChangeItemPriorityController.php:18
 * @route '/projects/{project}/cards/{card}/items/priority'
 */
 ChangeItemPriorityController.put = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\DeleteCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 const DeleteCardItemController = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -16,7 +16,7 @@ DeleteCardItemController.definition = {
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\DeleteCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 DeleteCardItemController.url = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions) => {
@@ -45,7 +45,7 @@ DeleteCardItemController.url = (args: { project: string | number, card: string |
 
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\DeleteCardItemController::__invoke
-* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:16
+* @see app/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.php:17
 * @route '/projects/{project}/cards/{card}/items/{item}'
 */
 DeleteCardItemController.delete = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
