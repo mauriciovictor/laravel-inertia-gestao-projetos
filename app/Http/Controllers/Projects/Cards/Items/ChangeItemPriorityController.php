@@ -14,13 +14,12 @@ readonly class ChangeItemPriorityController
     {
     }
 
-    public function __invoke(Request $request): \Illuminate\Http\RedirectResponse
+    public function __invoke(Request $request, string $project_id)
     {
         $item_id = $request->input('item_id');
         $priority = $request->input('priority');
 
         $this->useCase->execute($item_id, $priority);
-
-        return redirect()->back()->with('success', 'Prioridade alterada com sucesso');
+        return redirect()->route('projects.cards.index', $project_id)->with('success', 'Prioridade alterada com sucesso');
     }
 }

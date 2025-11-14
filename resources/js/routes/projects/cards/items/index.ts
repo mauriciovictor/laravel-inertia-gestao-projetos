@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
-import move from './move'
 import change from './change'
+import move from './move'
 /**
 * @see \App\Http\Controllers\Projects\Cards\Items\CreateCardItemController::__invoke
 * @see app/Http/Controllers/Projects/Cards/Items/CreateCardItemController.php:19
@@ -50,6 +50,60 @@ store.url = (args: { project: string | number, card: string | number } | [projec
 store.post = (args: { project: string | number, card: string | number } | [project: string | number, card: string | number ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Projects\Cards\Items\UpdateItemController::__invoke
+* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:16
+* @route '/projects/{project}/cards/{card}/items/{item}'
+*/
+export const update = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+    url: update.url(args, options),
+    method: 'put',
+})
+
+update.definition = {
+    methods: ["put"],
+    url: '/projects/{project}/cards/{card}/items/{item}',
+} satisfies RouteDefinition<["put"]>
+
+/**
+* @see \App\Http\Controllers\Projects\Cards\Items\UpdateItemController::__invoke
+* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:16
+* @route '/projects/{project}/cards/{card}/items/{item}'
+*/
+update.url = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions) => {
+    if (Array.isArray(args)) {
+        args = {
+            project: args[0],
+            card: args[1],
+            item: args[2],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        project: args.project,
+        card: args.card,
+        item: args.item,
+    }
+
+    return update.definition.url
+            .replace('{project}', parsedArgs.project.toString())
+            .replace('{card}', parsedArgs.card.toString())
+            .replace('{item}', parsedArgs.item.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Projects\Cards\Items\UpdateItemController::__invoke
+* @see app/Http/Controllers/Projects/Cards/Items/UpdateItemController.php:16
+* @route '/projects/{project}/cards/{card}/items/{item}'
+*/
+update.put = (args: { project: string | number, card: string | number, item: string | number } | [project: string | number, card: string | number, item: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+    url: update.url(args, options),
+    method: 'put',
 })
 
 /**
@@ -107,9 +161,10 @@ destroy.delete = (args: { project: string | number, card: string | number, item:
 })
 
 const items = {
-    store: Object.assign(store, store),
-    move: Object.assign(move, move),
     change: Object.assign(change, change),
+    store: Object.assign(store, store),
+    update: Object.assign(update, update),
+    move: Object.assign(move, move),
     destroy: Object.assign(destroy, destroy),
 }
 

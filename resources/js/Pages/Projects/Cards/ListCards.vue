@@ -1,101 +1,45 @@
 <script setup>
 import AppLayout     from "../../../Layouts/AppLayout.vue";
-import {router, useForm, Form, Link} from "@inertiajs/vue3";
+import {Form} from "@inertiajs/vue3";
 import ActionCan from "../../../Components/ActionCan.vue";
-import {onMounted, ref, nextTick} from "vue";
 import draggable from "vuedraggable";
-
 import CreateCardController from "../../../actions/App/Http/Controllers/Projects/Cards/CreateCardController.js";
 import UpdateCardController from "../../../actions/App/Http/Controllers/Projects/Cards/UpdateCardController.js";
-import DeleteCardController from "../../../actions/App/Http/Controllers/Projects/Cards/DeleteCardController.js";
-import {useDialogConfirm} from "../../../composables/useDialogConfirm.js";
-import CreateCardItemController
-    from "../../../actions/App/Http/Controllers/Projects/Cards/Items/CreateCardItemController.js";
-import {useToast} from "primevue";
-import ChangeItemPriorityController
-    from "../../../actions/App/Http/Controllers/Projects/Cards/Items/ChangeItemPriorityController.js";
-import DeleteCardItemController
-    from "../../../actions/App/Http/Controllers/Projects/Cards/Items/DeleteCardItemController.js";
+import {useProjectCard} from "../../../composables/useProjectCard.js";
+import {watch} from "vue";
 
 const props = defineProps(['cards', 'project', 'priorities'])
-const dialogConfirm = useDialogConfirm(
-    'Confirmação',
-    'Deseja o card selecionado?',
-    'pi pi-info-circle',
-    'Delete',
-    'Cancel',
-    'pi pi-check',
-    'pi pi-times',
-    () => {
-        router.delete(DeleteCardController({
-            project: props.project.id,
-            card: selectedRow.value,
-        }), {
-            preserveState: true, replace: true, preserveScroll: true,
-        })
-    },
-    () => {}
-)
 
-const selectedRow = ref(null);
-
-const handleDeleteRecord = (id) => {
-    selectedRow.value = id;
-    dialogConfirm.showDialog();
-}
-
-const op = ref();
-const toggle = (event) => {
-    op.value.toggle(event);
-}
-
-const form = useForm({
-    id: null,
-    title: '',
-    color: '',
-    description: '',
-})
-
-const handleSuccess = (event) => {
-    form.reset();
-    formItem.reset();
-    toggle()
-    mountCardItems();
-}
-
-let cards_items = ref({})
-
-const mountCardItems = () => {
-    const cards = {};
-    props.cards.forEach(card => {
-        cards[`card-${card.id}`] = card.items.length > 0 ?
-            card.items.map((item, index) => ({name: item.title, description: item.description, priority: item.priority,   id: item.id})) : []
-    })
-    cards_items.value = cards;
-}
-
-const drag = ref(false);
-
-const dragOptions = {
-    animation: 200,
-    group: "description",
-    ghostClass: "ghost",
-};
-
-const selectedCard = ref(null);
-
-const handleEditCard = (event, card) => {
-    selectedCard.value = card;
-    form.title = card.title;
-    form.color = card.color;
-    form.description = card.description;
-
-    toggle(event)
-}
-
-onMounted(() => {
-    mountCardItems();
-})
+const {
+    selectedCard,
+    formCard,
+    handleEditCard,
+    togglePopoverFormCard,
+    dragOptions,
+    drag,
+    mountCardItems,
+    handleDeleteCard,
+    cardItems,
+    dialogDeleteCard,
+    popoverFormCard,
+    updateOrCreateCardItem,
+    formItem,
+    togglePopoverProjectCardItem,
+    handleSubmitCardSuccess,
+    cards,
+    priorities,
+    project,
+    popoverProjectCardItems,
+    onRightClick,
+    getPriority,
+    onAdd,
+    menu,
+    menuContextItemsToCardItems,
+    selectedItem,
+    handleSubmitItemSuccess,
+    getPriorityItems,
+    mountContextMenuItem
+} = useProjectCard()
 
 function hexToRgba(hex, alpha = 1) {
     const r = parseInt(hex.slice(0, 2), 16);
@@ -104,146 +48,34 @@ function hexToRgba(hex, alpha = 1) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
+cards.value = props.cards
+project.value = props.project
+mountContextMenuItem(props)
 
-//card items
-const formItem = useForm({
-    id: null,
-    card_id: null,
-    title: '',
-    description: '',
-    priority: '',
-})
+mountCardItems()
 
-const opItem = ref();
-
-const toggleItem = async (event, card_id = null) => {
-    formItem.card_id = card_id;
-    await nextTick();
-    opItem.value.toggle(event);
-}
-
-
-const handleItemSuccess = (event) => {
-    form.reset();
-    formItem.reset();
-    toggleItem()
-    mountCardItems();
-}
-const toast = useToast();
-const selectedItem = ref(null);
-const menu = ref(null);
-
-const priorityOptions = props.priorities.map(priority => ({label: priority.name, code: priority.code, icon: priority.icon, command: (event) => {
-        const url = ChangeItemPriorityController({
-            card: selectedRow.value,
-            project: props.project.id,
-        });
-        router.put(url, {
-            item_id: selectedItem.value,
-            priority:event.item.code
-        }, {
-            onSuccess: () => mountCardItems()
-        })
-    }}));
-const selecteItemData = ref(null);
-const onRightClick = (event, card, user) => {
-    selectedRow.value = card.id;
-    selectedItem.value = user.id;
-    selecteItemData.value = user;
-
-    menu.value.show(event);
-};
-
-const items = ref([
-    {
-        label: 'Prioridade',
-        icon: 'pi pi-clock',
-        items: [...priorityOptions]
+watch(
+    () => props.cards,
+    (newVal, oldVal) => {
+        cards.value = newVal
+        mountCardItems()
     },
-    {
-        label: 'Editar',
-        icon: 'pi pi-pencil',
-        command: (e) => {
-            const ev = e?.originalEvent ?? e;
-            if (menu && menu.value && typeof menu.value.hide === 'function') {
-                menu.value.hide();
-            }
-
-            formItem.title = selecteItemData.value.name;
-            formItem.description = selecteItemData.value.description;
-            formItem.priority = selecteItemData.value.priority;
-            formItem.id = selecteItemData.value.id;
-            
-            toggleItem(ev, selectedRow.value)
-        }
-    },
-    {
-        label: 'Excluir',
-        icon: 'pi pi-trash',
-        command: () => handleDeleteCardItem()
-    }
-]);
-
-const onAdd = (event) => {
-    const new_card_id = event.to.id.replace('card-item-', '');
-    const old_card_id = event.from.id.replace('card-item-', '');
-    const item_id = event.item.id.replace('item-', '');
-    const url = ChangeCardItemController({
-        card: old_card_id,
-        project: props.project.id,
-    });
-    router.put(url, {
-        item_id,
-        project_card_id: new_card_id
-    })
-};
-
-const getPriority = (element) => props.priorities.find(p => p.code === element.priority)
-
-const confirmDelete = () => {
-    router.delete(DeleteCardItemController({
-        project: props.project.id,
-        card: selectedRow.value,
-        item: selectedItem.value,
-    }), {
-        preserveState: true,
-        replace: true,
-        preserveScroll: true,
-        onSuccess: () => {
-            mountCardItems()
-        }
-    })
-}
-
-const dialogDeleteConfirmItem = useDialogConfirm(
-    'Confirmação',
-    'Deseja delete o item selecionado?',
-    'pi pi-info-circle',
-    'Delete',
-    'Cancel',
-    'pi pi-check',
-    'pi pi-times',
-    confirmDelete,
-    () => {}
+    { deep: true }
 )
-
-const handleDeleteCardItem = () => {
-    dialogDeleteConfirmItem.showDialog();
-}
 </script>
 
 <template>
     <AppLayout>
         <div class="flex flex-col items-start justify-between">
-            <h3 class="text-3xl text-neutral-900 font-medium mb-8">Listagem de cards do projeto: {{project.title}} </h3>
+            <h3 class="text-3xl text-neutral-900 font-medium mb-8">Listagem de cards do projeto: {{props.project.title}} </h3>
             <ActionCan feature="users" action="create" >
-                <Button type="button" label="Novo Card" severity="success" icon="pi pi-plus" class="p-button-outlined" @click="toggle" />
+                <Button type="button" label="Novo Card" severity="success" icon="pi pi-plus" class="p-button-outlined" @click="togglePopoverFormCard" />
             </ActionCan>
         </div>
 
         <div class="card flex justify-center">
-            <Popover ref="op">
-                <Form method="post" @success="handleSuccess" :action="selectedCard?.id ? UpdateCardController({
+            <Popover ref="popoverFormCard">
+                <Form method="post" @success="handleSubmitCardSuccess" :action="selectedCard?.id ? UpdateCardController({
                 project: project?.id,
                 card: selectedCard?.id,
                 }) : CreateCardController(project.id)" #default="{ errors, resetAndClearErrors }" class="space-y-6">
@@ -251,7 +83,7 @@ const handleDeleteCardItem = () => {
                         <label class="flex flex-col">
                             <span class="text-sm font-medium text-gray-700 mb-2">Nome</span>
                             <div class="flex items-center gap-3 bg-gray-50 rounded-lg px-3  border border-gray-200 focus-within:ring-2 focus-within:ring-emerald-200">
-                                <InputText name="title" v-model="form.title" placeholder="Digite o nome do card" class="w-full bg-transparent border-0 focus:ring-0"/>
+                                <InputText name="title" v-model="formCard.title" placeholder="Digite o nome do card" class="w-full bg-transparent border-0 focus:ring-0"/>
                             </div>
                             <Message v-if="errors.title" severity="error" size="small" variant="simple">{{ errors.title }}</Message>
                         </label>
@@ -259,21 +91,21 @@ const handleDeleteCardItem = () => {
                         <label class="flex flex-col">
                             <span class="text-sm font-medium text-gray-700 mb-2">Descrição</span>
                             <div class="flex items-center gap-3 bg-gray-50 rounded-lg px-3  border p-1 border-gray-200 focus-within:ring-2 focus-within:ring-emerald-200">
-                                <Textarea v-model="form.description" name="description" rows="5" placeholder="Digite sua descrição" cols="30" class="w-full bg-transparent !border-0 focus:ring-0 focus:outline-none "/>
+                                <Textarea v-model="formCard.description" name="description" rows="5" placeholder="Digite sua descrição" cols="30" class="w-full bg-transparent !border-0 focus:ring-0 focus:outline-none "/>
                             </div>
                             <Message v-if="errors.description" severity="error" size="small" variant="simple">{{ errors.description }}</Message>
                         </label>
                         <label class="flex flex-col">
                             <span class="text-sm font-medium text-gray-700 mb-2">Cor</span>
                             <div class="flex items-center gap-3 bg-gray-50 rounded-lg px-3  border p-1 border-gray-200 focus-within:ring-2 focus-within:ring-emerald-200">
-                                <ColorPicker v-model="form.color" name="color" class="w-full" inputId="card-color"  />
-                                <input type="hidden" name="color" :value="form.color" />
+                                <ColorPicker v-model="formCard.color" name="color" class="w-full" inputId="card-color"  />
+                                <input type="hidden" name="color" :value="formCard.color" />
                             </div>
                             <Message v-if="errors.color" severity="error" size="small" variant="simple">{{ errors.color }}</Message>
                         </label>
                     </div>
                     <div class="flex items-center justify-end gap-3">
-                        <Button @click="toggle" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-sm text-gray-700">
+                        <Button @click="togglePopoverFormCard" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-sm text-gray-700">
                             <i class="pi pi-times"></i>
                             Cancelar
                         </Button>
@@ -291,11 +123,8 @@ const handleDeleteCardItem = () => {
         </div>
 
         <div class="card flex justify-center">
-            <Popover ref="opItem">
-                <Form method="post" :action="CreateCardItemController({
-                project: project?.id,
-                card: formItem?.card_id,
-                })"  #default="{ errors, resetAndClearErrors }" class="space-y-6" @success="handleItemSuccess">
+            <Popover ref="popoverProjectCardItems">
+                <Form method="post" :action="updateOrCreateCardItem()"  #default="{ errors, resetAndClearErrors }" class="space-y-6" @success="handleSubmitItemSuccess">
                     <input type="hidden" name="card_id" :value="formItem?.card_id" />
                     <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                         <label class="flex flex-col">
@@ -331,7 +160,7 @@ const handleDeleteCardItem = () => {
                         </label>
                     </div>
                     <div class="flex items-center justify-end gap-3">
-                        <Button @click="toggle" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-sm text-gray-700">
+                        <Button @click="(event) => togglePopoverProjectCardItem(event, null)" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-sm text-gray-700">
                             <i class="pi pi-times"></i>
                             Cancelar
                         </Button>
@@ -356,9 +185,9 @@ const handleDeleteCardItem = () => {
                             {{card.title}}
                         </p>
                         <div class="flex mt-1">
-                            <Button type="button" class="p-0" icon="pi pi-plus" text  @click=" (event) => toggleItem(event, card.id)"/>
+                            <Button type="button" class="p-0" icon="pi pi-plus" text  @click=" (event) => togglePopoverProjectCardItem(event, card)"/>
                             <Button type="button" severity="warn" class="p-0" icon="pi pi-pencil" text  @click="(event) => handleEditCard(event, card)"/>
-                            <Button type="button" @click="handleDeleteRecord(card.id)"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
+                            <Button type="button" @click="handleDeleteCard(card.id)"  class="text-red-500 hover:bg-red-100" icon="pi pi-trash" text />
                         </div>
                     </div>
 
@@ -375,7 +204,7 @@ const handleDeleteCardItem = () => {
 
                     <draggable
                         :id="'card-item-' + card.id"
-                        v-model="cards_items[`card-${card.id}`]"
+                        v-model="cardItems[`card-${card.id}`]"
                         item-key="order"
                         :component-data="{
                         tag: 'ul',
@@ -408,7 +237,7 @@ const handleDeleteCardItem = () => {
                     </div>
                 </template>
             </Card>
-            <ContextMenu ref="menu" :model="items" @hide="selectedUser = null" />
+            <ContextMenu ref="menu" :model="menuContextItemsToCardItems" @hide="selectedItem = null" />
         </div>
     </AppLayout>
 </template>

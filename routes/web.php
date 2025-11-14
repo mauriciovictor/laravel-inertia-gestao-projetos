@@ -41,7 +41,8 @@ use App\Http\Controllers\Projects\Cards\Items\ {
     CreateCardItemController,
     ChangeCardItemController,
     DeleteCardItemController,
-    ChangeItemPriorityController
+    ChangeItemPriorityController,
+    UpdateItemController
 };
 
 
@@ -92,9 +93,10 @@ Route::middleware(['auth:web'])->group(function () {
             Route::delete('/{card}', DeleteCardController::class)->name('destroy');
 
             Route::prefix('{card}/items')->name('items.')->group(function () {
-                Route::post('/', CreateCardItemController::class)->name('store');
-                Route::put('/move', ChangeCardItemController::class)->name('move.item');
                 Route::put('/priority', ChangeItemPriorityController::class)->name('change.priority');
+                Route::post('/', CreateCardItemController::class)->name('store');
+                Route::put('/{item}', UpdateItemController::class)->name('update');
+                Route::put('/move', ChangeCardItemController::class)->name('move.item');
                 Route::delete('/{item}', DeleteCardItemController::class)->name('destroy');
             });
         });
