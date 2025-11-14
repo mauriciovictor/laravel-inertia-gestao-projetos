@@ -162,9 +162,9 @@ destroy.delete = (args: { project: string | number, card: string | number, item:
 
 const items = {
     change: Object.assign(change, change),
+    move: Object.assign(move, move),
     store: Object.assign(store, store),
     update: Object.assign(update, update),
-    move: Object.assign(move, move),
     destroy: Object.assign(destroy, destroy),
 }
 

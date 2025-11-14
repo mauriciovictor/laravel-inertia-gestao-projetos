@@ -202,9 +202,11 @@ export function useProjectCard() {
         const item_id = event.item.id.replace('item-', '');
         const url = ChangeCardItemController({
             card: old_card_id,
-            project: project.id,
+            project: project?.value.id,
         });
-        router.put(url, {
+
+        router.post(url, {
+            _method: 'PUT',
             item_id,
             project_card_id: new_card_id
         })

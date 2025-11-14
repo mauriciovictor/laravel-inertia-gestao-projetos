@@ -94,9 +94,9 @@ Route::middleware(['auth:web'])->group(function () {
 
             Route::prefix('{card}/items')->name('items.')->group(function () {
                 Route::put('/priority', ChangeItemPriorityController::class)->name('change.priority');
+                Route::put('/move', ChangeCardItemController::class)->name('move.item');
                 Route::post('/', CreateCardItemController::class)->name('store');
                 Route::put('/{item}', UpdateItemController::class)->name('update');
-                Route::put('/move', ChangeCardItemController::class)->name('move.item');
                 Route::delete('/{item}', DeleteCardItemController::class)->name('destroy');
             });
         });
