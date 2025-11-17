@@ -14,16 +14,14 @@ class UserRepository
     {
     }
 
-    public function create(UserData $userData): User
+    public function create(UserData $userData)
     {
-        $user = $this->model->create([
+        return $this->model->create([
             'name' => $userData->name,
             'email' => $userData->email,
             'role_id' => $userData->role_id,
             'password' => $userData->password?->toHash(),
         ]);
-
-        return $user;
     }
 
     public function update($id, UserData $userData)
@@ -49,9 +47,9 @@ class UserRepository
     }
 
 
-    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, string $search = '', int $page = 1, int $per_page = 5, array $appends): AbstractPaginator
+    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, array $appends, string $search = '', int $page = 1, int $per_page = 5): AbstractPaginator
     {
-        $userQuery = User::query()->with('role');
+        $userQuery = $this->model->newQuery()->with('role');
 
         $this
             ->applyFilters($userQuery, $fieldsFilters, $filterValues)

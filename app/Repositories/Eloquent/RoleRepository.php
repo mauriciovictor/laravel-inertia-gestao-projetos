@@ -43,7 +43,7 @@ class RoleRepository
         return Role::all();
     }
 
-    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, string $search = '', int $page = 1, int $per_page = 5, array $appends): LengthAwarePaginator
+    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, string $search = '', int $page = 1, int $per_page = 5, array $appends = []): LengthAwarePaginator
     {
         $userQuery = Role::query();
 

@@ -18,6 +18,8 @@ class UpdateUserUseCase
             $user = $this->userRepository->update($id, $userData);
             $this->roleRepository->removeRoleFromUser($user->id, $user->role_id);
             $this->roleRepository->assignRoleToUser($user->id, $userData->role_id);
+
+            return $user;
         } catch (\Exception $e) {
             throw new \Exception('Erro ao atualizar o usuário');
         }

@@ -9,6 +9,7 @@ enum ProjectStatusEnum: string
     case CANCELLED = 'cancelled';
     case PAUSED = 'paused';
 
+
     public function getLabel(): string
     {
         return match ($this) {

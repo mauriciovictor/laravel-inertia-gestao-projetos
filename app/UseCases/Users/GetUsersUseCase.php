@@ -16,11 +16,12 @@ class GetUsersUseCase
         array  $fieldsFilters,
         array  $filterValues,
         array  $fieldSortValues,
+        array  $appends,
         string $search = '',
         int    $page = 1,
         int    $per_page = 5,
-        array  $appends): AbstractPaginator
+    ): AbstractPaginator
     {
-        return $this->userRepository->allPaged($fieldsFilters, $filterValues, $fieldSortValues, $search, $page, $per_page, $appends);
+        return $this->userRepository->allPaged($fieldsFilters, $filterValues, $fieldSortValues, $appends, $search, $page, $per_page);
     }
 }

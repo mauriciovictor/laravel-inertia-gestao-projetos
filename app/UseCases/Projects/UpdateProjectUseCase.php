@@ -14,6 +14,6 @@ class UpdateProjectUseCase
 
     public function execute(string $id, ProjectData $data)
     {
-        $this->projectRepository->update($id, $data);
+        return $this->projectRepository->update($id, $data);
     }
 }

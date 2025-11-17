@@ -17,6 +17,8 @@ class CreateUserUseCase
         try {
             $user = $this->userRepository->create($userData);
             $this->roleRepository->assignRoleToUser($user->id, $userData->role_id);
+
+            return $user;
         } catch (\Exception $e) {
             throw new \Exception('Erro ao criar o usuário');
         }

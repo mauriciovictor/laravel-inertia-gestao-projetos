@@ -14,6 +14,6 @@ class CreateProjectUseCase
 
     public function execute(ProjectData $data)
     {
-        $this->projectRepository->create($data);
+        return $this->projectRepository->create($data);
     }
 }

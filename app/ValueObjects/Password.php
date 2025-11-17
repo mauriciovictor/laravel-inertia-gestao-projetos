@@ -10,17 +10,17 @@ class Password
 
     public function __construct(public string $password)
     {
-        $this->password = $password;
+
     }
 
     public function toHash(): string
     {
-        return bcrypt($this->password);
+        return password_hash($this->password, PASSWORD_BCRYPT);
     }
 
     public function matches(string $plain): bool
     {
-        return Hash::check($plain, $this->hash);
+        return password_verify($plain, $this->hash);
     }
 
     public function __toString(): string
