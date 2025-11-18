@@ -16,8 +16,10 @@ class UpdatePerfilUseCase
     public function execute(int $id, PerfilData $perfilData)
     {
         try {
-            $this->roleRepository->update($id, $perfilData->name);
+            $role = $this->roleRepository->update($id, $perfilData->name);
             $this->roleRepository->assyncPermissions($id, $perfilData->permissions);
+
+            return $role;
         } catch (\Exception $e) {
             dd($e);
             throw new \Exception('Erro ao atualizar o perfil');

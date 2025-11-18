@@ -3,7 +3,7 @@
 namespace App\UseCases\Perfis;
 
 use App\Repositories\Eloquent\RoleRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\AbstractPaginator;
 
 class GetPerfisUseCase
 {
@@ -18,7 +18,7 @@ class GetPerfisUseCase
         string $search = '',
         int    $page = 1,
         int    $per_page = 5,
-        array  $appends): LengthAwarePaginator
+        array  $appends = []): AbstractPaginator
     {
         return $this->roleRepository->allPaged($fieldsFilters, $filterValues, $fieldSortValues, $search, $page, $per_page, $appends);
     }

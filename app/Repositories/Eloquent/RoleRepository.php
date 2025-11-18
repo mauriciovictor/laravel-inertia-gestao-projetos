@@ -4,7 +4,6 @@ namespace App\Repositories\Eloquent;
 
 use App\Enums\FilterTypeEnum;
 use App\Repositories\Eloquent\Models\User;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Support\Facades\DB;
@@ -12,22 +11,22 @@ use Spatie\Permission\Models\Role;
 
 class RoleRepository
 {
-    public function findById(int $id): \Spatie\Permission\Contracts\Role|Role
+    public function findById(int $id)
     {
         return Role::with('permissions')->where('id', $id)->first();
     }
 
-    public function create(string $name): \Spatie\Permission\Contracts\Role|Role
+    public function create(string $name)
     {
         return Role::create(['name' => $name]);
     }
 
-    public function assyncPermissions(int $id, array $permissions): \Spatie\Permission\Contracts\Role|Role
+    public function assyncPermissions(int $id, array $permissions)
     {
         return Role::findById($id)->syncPermissions($permissions);
     }
 
-    public function update(int $id, $name): \Spatie\Permission\Contracts\Role|Role
+    public function update(int $id, $name)
     {
         Role::findById($id)->update(['name' => $name]);
         return Role::findById($id);
@@ -43,7 +42,7 @@ class RoleRepository
         return Role::all();
     }
 
-    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, string $search = '', int $page = 1, int $per_page = 5, array $appends = []): LengthAwarePaginator
+    public function allPaged(array $fieldsFilters, array $filterValues, array $fielSortValues, string $search = '', int $page = 1, int $per_page = 5, array $appends = []): AbstractPaginator
     {
         $userQuery = Role::query();
 

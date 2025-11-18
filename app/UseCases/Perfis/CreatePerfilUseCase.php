@@ -5,7 +5,6 @@ namespace App\UseCases\Perfis;
 use App\DTOs\PerfilData;
 use App\Repositories\Eloquent\RoleRepository;
 use App\Services\PermissionService;
-use Spatie\Permission\Models\Role;
 
 class CreatePerfilUseCase
 {
@@ -19,7 +18,10 @@ class CreatePerfilUseCase
         try {
             $role = $this->roleRepository->create($perfilData->name);
             $this->roleRepository->assyncPermissions($role->id, $perfilData->permissions);
+
+            return $role;
         } catch (\Exception $e) {
+            dd($e->getMessage());
             throw new \Exception('Erro ao criar o perfil');
         }
     }
