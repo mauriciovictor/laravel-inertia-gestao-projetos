@@ -14,6 +14,6 @@ readonly class DeleteProjectCardUseCase
 
     public function execute(int $project_card_id)
     {
-        $this->repository->delete($project_card_id);
+        return $this->repository->delete($project_card_id);
     }
 }

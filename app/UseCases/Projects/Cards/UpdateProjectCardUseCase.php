@@ -14,6 +14,6 @@ readonly class UpdateProjectCardUseCase
 
     public function execute(int $project_card_id, ProjectCardData $data)
     {
-        $this->repository->update($project_card_id, $data);
+        return $this->repository->update($project_card_id, $data);
     }
 }

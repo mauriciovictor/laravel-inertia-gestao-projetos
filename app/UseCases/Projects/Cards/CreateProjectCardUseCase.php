@@ -14,6 +14,6 @@ readonly class CreateProjectCardUseCase
 
     public function execute(ProjectCardData $data)
     {
-        $this->repository->create($data);
+        return $this->repository->create($data);
     }
 }
