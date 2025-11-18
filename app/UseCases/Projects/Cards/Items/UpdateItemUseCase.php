@@ -11,8 +11,8 @@ readonly class UpdateItemUseCase
     {
     }
 
-    public function execute(int $item_id, ProjectCardItemData $data): void
+    public function execute(int $item_id, ProjectCardItemData $data)
     {
-        $this->repository->update($item_id, $data);
+        return $this->repository->update($item_id, $data);
     }
 }

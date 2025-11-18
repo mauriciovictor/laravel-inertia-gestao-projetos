@@ -28,6 +28,8 @@ class ProjectCardItemRepository
         $this->model->find($item_id)->update([
             'project_card_id' => $card_id,
         ]);
+
+        return $this->model->find($item_id);
     }
 
     public function updateItemPriority(int $item_id, string $priority)

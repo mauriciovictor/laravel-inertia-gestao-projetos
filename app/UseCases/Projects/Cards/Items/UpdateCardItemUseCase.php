@@ -12,6 +12,6 @@ class UpdateCardItemUseCase
 
     public function execute(int $card_id, int $item_id)
     {
-        $this->repository->updateProjectCardId($card_id, $item_id);
+        return $this->repository->updateProjectCardId($card_id, $item_id);
     }
 }

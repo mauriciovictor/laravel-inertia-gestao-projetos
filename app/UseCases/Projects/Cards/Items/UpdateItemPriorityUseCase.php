@@ -12,6 +12,6 @@ class UpdateItemPriorityUseCase
 
     public function execute(int $item_id, string $priority)
     {
-        $this->repository->updateItemPriority($item_id, $priority);
+        return $this->repository->updateItemPriority($item_id, $priority);
     }
 }

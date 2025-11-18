@@ -2,7 +2,6 @@
 
 use App\DTOs\ProjectCardData;
 use App\Repositories\Eloquent\ProjectCardRepository;
-use App\UseCases\Projects\Cards\CreateProjectCardUseCase;
 use App\UseCases\Projects\Cards\UpdateProjectCardUseCase;
 
 beforeEach(function () {

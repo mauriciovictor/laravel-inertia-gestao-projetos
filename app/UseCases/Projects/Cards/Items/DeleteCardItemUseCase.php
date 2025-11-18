@@ -13,6 +13,6 @@ class DeleteCardItemUseCase
 
     public function execute(int $id)
     {
-        $this->repository->delete($id);
+        return $this->repository->delete($id);
     }
 }
