@@ -49,6 +49,14 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Create a new factory instance for the model.
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\UserFactory::new();
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class);
