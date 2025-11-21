@@ -18,14 +18,6 @@ services:
       - "8000:8000"  # Laravel dev server (php artisan serve)
       - "5173:5173"  # Vite dev server (se usar)
 
-    # Variáveis de ambiente úteis durante desenvolvimento
-    environment:
-      APP_ENV: local
-      APP_DEBUG: '1'
-      # Configura DB para usar SQLite apontando para o arquivo montado dentro do projeto
-      DB_CONNECTION: sqlite
-      DB_DATABASE: /var/www/html/database/database.sqlite
-
     # Usar root facilita permissões durante dev (pode trocar para www-data ou UID do host se preferir)
     user: root
 
