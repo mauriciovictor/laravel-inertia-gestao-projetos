@@ -67,7 +67,7 @@ test('cria um usuário com os dados corretos', function () {
             return $data['name'] === 'João Silva'
                 && $data['email'] === 'joao@example.com'
                 && $data['role_id'] === 1
-                && is_string($data['password']);
+                && isset($data['password']);
         }))
         ->andReturn($expectedUser);
 
@@ -303,6 +303,6 @@ it('paginação com filtros', function () {
         page: 1,
         per_page: 5
     );
-   
+
     expect($result)->toBe($paginatorMock);
 });

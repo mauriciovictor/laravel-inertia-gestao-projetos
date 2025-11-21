@@ -20,7 +20,7 @@ class UserRepository
             'name' => $userData->name,
             'email' => $userData->email,
             'role_id' => $userData->role_id,
-            'password' => $userData->password?->toHash(),
+            'password' => $userData->password,
         ]);
     }
 
