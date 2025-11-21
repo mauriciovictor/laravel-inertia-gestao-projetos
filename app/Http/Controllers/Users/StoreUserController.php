@@ -16,15 +16,12 @@ class StoreUserController
 
     public function __invoke(CreateUseRequest $request)
     {
-        if (!Gate::allows('user-store')) {
-            throw new \Exception('Sem autorização para acessar este recurso.');
-        }
+        abort_if(!Gate::allows('user-store'), 403, 'Sem autorização');
+        
         #cria o DTO a partir dos dados validados
         $userData = $request->toDTO();
-
         #salva o usuário
         $this->createUserUseCase->execute($userData);
-
         return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso');
     }
 }

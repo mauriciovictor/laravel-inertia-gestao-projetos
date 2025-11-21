@@ -1,13 +1,16 @@
 <?php
 
+use App\Enums\PermissionsEnum;
 use App\Repositories\Eloquent\Models\User;
+use Illuminate\Support\Facades\DB;
+
 
 beforeEach(function () {
     $this->url = route('users.store');
     $this->defaultUser = User::find(1);
 });
 
-describe('CreateUseControlelr', function () {
+describe('CreateUserController', function () {
     it('Usuário não enviou nenhum dado para cadastro', function () {
         $token = $this->getCsrfToken();
 
@@ -97,7 +100,7 @@ describe('CreateUseControlelr', function () {
                 'role_id' => 1,
                 'password_confirmation' => 'senha123'
             ]);
-        
+
         // status
         $response->assertRedirect(route('users.index'));
 
@@ -109,6 +112,34 @@ describe('CreateUseControlelr', function () {
             'email' => 'mmauriciovictor17@gmail.com',
             'role_id' => 1
         ]);
+    });
+    it('Usuário não possui permissão para criar usuarios', function () {
+        $token = $this->getCsrfToken();
+
+        //deleta permissão do usuário padrão
+        $userRoleId = $this->defaultUser->role_id;
+        $permission = DB::table('permissions')
+            ->where('name', PermissionsEnum::USER_CREATE)
+            ->first();
+        $permissionId = $permission->id;
+        DB::table('role_has_permissions')->where('role_id', $userRoleId)->where('permission_id', $permissionId)->delete();
+
+        $response = $this
+            ->actingAs($this->defaultUser, 'web')
+            ->withHeaders([
+                'Accept' => 'application/json',
+            ])
+            ->post($this->url, [
+                '_token' => $token,
+                'name' => 'Mauricio',
+                'email' => 'mmauriciovictor17@gmail.com',
+                'password' => 'senha123',
+                'role_id' => 1,
+                'password_confirmation' => 'senha123'
+            ]);
+
+        $response->dump(403);
+        $response->assertStatus(403);
     });
 });
 

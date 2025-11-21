@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\HandleInertiaRequests;
 use Inertia\Inertia;
 use Illuminate\Http\{Request, Response};
+use Illuminate\Http\JsonResponse;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,21 +18,23 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             HandleInertiaRequests::class,
         ]);
-
-
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-//        $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
-//            if (!app()->environment(['testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
-//                return redirect()
-//                    ->back()
-//                    ->with(['error' => $exception->getMessage() ?? 'Ocorreu um erro inesperado.']);
-//            } elseif ($response->getStatusCode() === 419) {
-//                return back()->with([
-//                    'message' => 'The page expired, please try again.',
-//                ]);
-//            }
-//
-//            return $response;
-//        });
+        $exceptions->respond(function (Response|JsonResponse $response, Throwable $exception, Request $request) {
+            if ($response instanceof Response) {
+                if (!app()->environment(['testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
+                    return redirect()
+                        ->back()
+                        ->with(['error' => $exception->getMessage() ?? 'Ocorreu um erro inesperado.']);
+                } elseif ($response->getStatusCode() === 419) {
+                    return back()->with([
+                        'message' => 'The page expired, please try again.',
+                    ]);
+                }
+
+                return $response;
+            }
+
+            return $response;
+        });
     })->create();
